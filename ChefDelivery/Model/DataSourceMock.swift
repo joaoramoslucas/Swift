@@ -5,27 +5,29 @@
 //  Created by Joao Lucas on 17/05/23.
 //
 
-import Foundation
+import Foundation // Importa o framework Foundation para funcionalidades básicas
 
+// Mock de dados para tipos de pedido, contendo um array de OrderType
 let ordersMock: [OrderType] = [
-    OrderType(id: 1, name: "Restaurantes", image: "hamburguer"),
-    OrderType(id: 2, name: "Mercado", image: "mercado"),
-    OrderType(id: 3, name: "Farmácia", image: "farmacia"),
-    OrderType(id: 4, name: "Pet", image: "petshop"),
-    OrderType(id: 5, name: "Descontos", image: "descontos"),
-    OrderType(id: 6, name: "Bebidas", image: "bebidas"),
-    OrderType(id: 7, name: "Gourmet", image: "gourmet"),
+    OrderType(id: 1, name: "Restaurantes", image: "hamburguer"), // Tipo de pedido para restaurantes
+    OrderType(id: 2, name: "Mercado", image: "mercado"), // Tipo de pedido para mercado
+    OrderType(id: 3, name: "Farmácia", image: "farmacia"), // Tipo de pedido para farmácia
+    OrderType(id: 4, name: "Pet", image: "petshop"), // Tipo de pedido para pet shop
+    OrderType(id: 5, name: "Descontos", image: "descontos"), // Tipo de pedido para descontos
+    OrderType(id: 6, name: "Bebidas", image: "bebidas"), // Tipo de pedido para bebidas
+    OrderType(id: 7, name: "Gourmet", image: "gourmet"), // Tipo de pedido para produtos gourmet
 ]
 
+// Mock de dados para lojas, contendo um array de StoreType
 let storesMock: [StoreType] = [
     StoreType(
         id: 1,
-        name: "Monstro Burger",
-        logoImage: "monstro-burger-logo",
-        headerImage: "monstro-burger-header",
-        location: "Rua Principal, 123, São Paulo, SP",
-        stars: 4,
-        products: [
+        name: "Monstro Burger", // Nome da loja
+        logoImage: "monstro-burger-logo", // Imagem do logo da loja
+        headerImage: "monstro-burger-header", // Imagem de cabeçalho da loja
+        location: "Rua Principal, 123, São Paulo, SP", // Localização da loja
+        stars: 4, // Avaliação da loja em estrelas
+        products: [ // Array de produtos disponíveis na loja
             ProductType(id: 1, name: "Hambúrguer Clássico", description: "Hambúrguer de carne com queijo, alface e tomate", image: "classic_burger", price: 14.99),
             ProductType(id: 2, name: "Hambúrguer com Bacon", description: "Hambúrguer de carne com queijo, bacon crocante, alface e tomate", image: "bacon_burger", price: 16.99),
             ProductType(id: 3, name: "Batatas Fritas", description: "Porção de batatas fritas crocantes", image: "fries", price: 5.99),
@@ -35,11 +37,11 @@ let storesMock: [StoreType] = [
     ),
     StoreType(
         id: 2,
-        name: "Food Court",
-        logoImage: "food-court-logo",
-        headerImage: "food-court-header",
-        location: "Avenida Secundária, 456, São Paulo, SP",
-        stars: 4,
+        name: "Food Court", // Nome da loja
+        logoImage: "food-court-logo", // Imagem do logo da loja
+        headerImage: "food-court-header", // Imagem de cabeçalho da loja
+        location: "Avenida Secundária, 456, São Paulo, SP", // Localização da loja
+        stars: 4, // Avaliação da loja em estrelas
         products: [
             ProductType(id: 6, name: "Pizza Margherita", description: "Pizza com molho de tomate, queijo mozzarella e manjericão", image: "margherita_pizza", price: 18.99),
             ProductType(id: 7, name: "Pizza Pepperoni", description: "Pizza com molho de tomate, queijo mozzarella e pepperoni", image: "pepperoni_pizza", price: 19.99),
@@ -50,11 +52,11 @@ let storesMock: [StoreType] = [
     ),
     StoreType(
         id: 3,
-        name: "Carbron",
-        logoImage: "carbron-logo",
-        headerImage: "carbron-header",
-        location: "Rua Terceira, 789, São Paulo, SP",
-        stars: 5,
+        name: "Carbron", // Nome da loja
+        logoImage: "carbron-logo", // Imagem do logo da loja
+        headerImage: "carbron-header", // Imagem de cabeçalho da loja
+        location: "Rua Terceira, 789, São Paulo, SP", // Localização da loja
+        stars: 5, // Avaliação da loja em estrelas
         products: [
             ProductType(id: 11, name: "Picanha", description: "Picanha grelhada servida com arroz, farofa e vinagrete", image: "picanha", price: 29.99),
             ProductType(id: 12, name: "Costela no bafo", description: "Deliciosa costela assada lentamente, servida com batatas", image: "ribs", price: 26.99),
@@ -65,11 +67,11 @@ let storesMock: [StoreType] = [
     ),
     StoreType(
         id: 4,
-        name: "Padaria",
-        logoImage: "bakery-logo",
-        headerImage: "bakery-header",
-        location: "Rua Quarta, 159, São Paulo, SP",
-        stars: 3,
+        name: "Padaria", // Nome da loja
+        logoImage: "bakery-logo", // Imagem do logo da loja
+        headerImage: "bakery-header", // Imagem de cabeçalho da loja
+        location: "Rua Quarta, 159, São Paulo, SP", // Localização da loja
+        stars: 3, // Avaliação da loja em estrelas
         products: [
             ProductType(id: 16, name: "Pão Francês", description: "Pão francês fresquinho", image: "french_bread", price: 0.50),
             ProductType(id: 17, name: "Croissant", description: "Croissant folhado", image: "croissant", price: 2.99),
@@ -80,11 +82,11 @@ let storesMock: [StoreType] = [
     ),
     StoreType(
         id: 5,
-        name: "Açaí Panda",
-        logoImage: "acai-panda-logo",
-        headerImage: "acai-panda-header",
-        location: "Avenida Quinta, 753, São Paulo, SP",
-        stars: 4,
+        name: "Açaí Panda", // Nome da loja
+        logoImage: "acai-panda-logo", // Imagem do logo da loja
+        headerImage: "acai-panda-header", // Imagem de cabeçalho da loja
+        location: "Avenida Quinta, 753, São Paulo, SP", // Localização da loja
+        stars: 4, // Avaliação da loja em estrelas
         products: [
             ProductType(id: 21, name: "Açaí Pequeno", description: "Açaí na tigela de 300ml com granola e banana", image: "small_acai", price: 8.99),
             ProductType(id: 22, name: "Açaí Médio", description: "Açaí na tigela de 500ml com granola, banana e leite condensado", image: "medium_acai", price: 10.99),

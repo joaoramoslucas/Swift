@@ -5,16 +5,22 @@
 //  Created by Joao Lucas on 17/05/23.
 //
 
-import SwiftUI
+import SwiftUI // Importa o framework SwiftUI para construir a interface do usuário
 
+// Estrutura principal do aplicativo, marcada como o ponto de entrada
 @main
 struct ChefDeliveryApp: App {
-    @StateObject private var cartViewModel = CartViewModel() // Estado do ambiente para o ViewModel do Carrinho
+    @State private var isLoggedIn: Bool = false // Variável para controlar o estado de login do usuário
 
+    // Corpo principal do aplicativo
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environmentObject(cartViewModel) // Passa o ambiente do ViewModel do Carrinho para o ContentView
+        WindowGroup { // Agrupa as janelas do aplicativo
+            if isLoggedIn { // Verifica se o usuário está logado
+                ContentView() // Se logado, exibe a tela principal do aplicativo
+                    .environmentObject(CartViewModel()) // Passa o ViewModel do carrinho como objeto de ambiente
+            } else {
+                LoginView(isLoggedIn: $isLoggedIn) // Se não logado, exibe a tela de login
+            }
         }
     }
 }
