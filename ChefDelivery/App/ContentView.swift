@@ -28,7 +28,9 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        let viewModel = CartViewModel()
         ContentView()
+            .environmentObject(viewModel) // Passa o ViewModel do Carrinho para a pré-visualização
             .previewLayout(.sizeThatFits)
     }
 }

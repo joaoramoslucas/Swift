@@ -18,3 +18,11 @@ struct ProductType: Identifiable {
         return "R$" + price.FormatPrice()
     }
 }
+
+struct CartItem {
+    let product: ProductType
+    var quantity: Int
+    var subTotal: Double {
+        return Double(quantity) * product.price
+    }
+}

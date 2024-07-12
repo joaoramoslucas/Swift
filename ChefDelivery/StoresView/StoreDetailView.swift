@@ -1,10 +1,3 @@
-//
-//  StoreDetailView.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 03/06/23.
-//
-
 import SwiftUI
 
 struct StoreDetailView: View {
@@ -25,7 +18,11 @@ struct StoreDetailView: View {
                     Spacer()
                     
                     Image(store.logoImage)
-                    
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+                        .shadow(radius: 4)
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal)
@@ -44,43 +41,60 @@ struct StoreDetailView: View {
                 .padding(.vertical, 8)
                 .padding(.horizontal)
                 
-                Text("Produtos")
-                    .font(.title)
-                    .bold()
-                    .padding()
-                
                 ForEach(store.products) { product in
-                    HStack(spacing: 8) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(product.name)
-                                .bold()
-                            
-                            Text(product.description)
-                                .foregroundStyle(.black.opacity(0.5))
-                            
-                            Text(product.formatPrice)
-                        }
-                        Spacer()
-                        
-                        Image(product.image)
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(12)
-                            .frame(width: 120, height: 120)
-                            .shadow(color: .black.opacity(0.3), radius: 20, x: 6, y: 8)
-                        
+                    NavigationLink(destination: ProductDetailView(product: product)) {
+                        ProductRow(product: product)
                     }
-                    .padding()
+                    .buttonStyle(PlainButtonStyle()) // Para remover o estilo padrão de navegação
                 }
-                .navigationTitle(store.name)
-                .navigationBarTitleDisplayMode(.inline)
+                
             }
+            .navigationTitle(store.name)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
-    struct StoreDetailView_Previews: PreviewProvider {
-        static var previews: some View {
-            StoreDetailView(store: storesMock[0])
-        }
-    }
 
+struct ProductRow: View {
+    let product: ProductType
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            Image(product.image)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 120, height: 120)
+                .cornerRadius(12)
+                .shadow(color: .black.opacity(0.1), radius: 10, x: 2, y: 4)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text(product.name)
+                    .font(.headline)
+                    .bold()
+                
+                Text(product.description)
+                    .font(.subheadline)
+                    .foregroundColor(.black.opacity(0.5))
+                    .lineLimit(2)
+                
+                Text(product.formatPrice)
+                    .font(.headline)
+                    .bold()
+            }
+            .padding(.trailing, 8)
+            
+            Spacer()
+        }
+        .padding(.vertical, 8)
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.1), radius: 10, x: 2, y: 4)
+        .padding(.horizontal)
+    }
+}
+
+struct StoreDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        StoreDetailView(store: storesMock[0])
+    }
+}
