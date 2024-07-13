@@ -1,4 +1,11 @@
-import SwiftUI // Importa o framework SwiftUI para a criação da interface do usuário
+//
+//  StoreDetailView.swift
+//  ChefDelivery
+//
+//  Created by Joao Lucas on 29/05/23.
+//
+
+import SwiftUI
 
 // Estrutura que representa a visualização de detalhes da loja
 struct StoreDetailView: View {

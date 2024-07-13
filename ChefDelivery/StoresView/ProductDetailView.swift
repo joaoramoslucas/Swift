@@ -1,4 +1,11 @@
-import SwiftUI // Importa o framework SwiftUI para a construção da interface do usuário
+//
+//  ProductTypeView.swift
+//  ChefDelivery
+//
+//  Created by Joao Lucas on 29/05/23.
+//
+
+import SwiftUI
 
 // Estrutura que representa a visualização de detalhes do produto
 struct ProductDetailView: View {
@@ -97,13 +104,13 @@ struct ProductDetailView: View {
                 Button(action: {
                     adicionarSacola() // Chama a função para adicionar ao carrinho
                 }) {
-                    Text("Adicionar à Sacola") // Texto do botão
+                    Text("Adicionar ao Carrinho") // Texto do botão
                         .foregroundColor(.white) // Cor do texto
                         .bold() // Texto em negrito
                         .font(.headline) // Tamanho da fonte
                         .padding() // Preenchimento interno
                         .frame(maxWidth: .infinity) // Largura máxima
-                        .background(Color.blue) // Cor de fundo
+                        .background(Color.red) // Cor de fundo
                         .cornerRadius(12) // Arredonda os cantos
                         .padding(.horizontal) // Preenchimento horizontal
                         .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 4) // Adiciona sombra

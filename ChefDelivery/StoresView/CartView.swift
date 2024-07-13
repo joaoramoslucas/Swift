@@ -1,3 +1,10 @@
+//
+//  CartView.swift
+//  ChefDelivery
+//
+//  Created by Joao Lucas on 29/05/23.
+//
+
 import SwiftUI
 
 // Classe que representa o ViewModel do carrinho, responsável pela lógica do carrinho de compras
