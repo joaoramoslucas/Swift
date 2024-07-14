@@ -4,13 +4,12 @@
 //
 //  Created by Joao Lucas on 29/05/23.
 //
-
 import SwiftUI
 
 // Classe que representa o ViewModel do carrinho, responsável pela lógica do carrinho de compras
 class CartViewModel: ObservableObject {
     @Published var items: [CartItem] = [] // Array que armazena os itens do carrinho
-
+    
     // Função para adicionar um item ao carrinho
     func addItem(product: ProductType, quantity: Int) {
         // Verifica se o item já existe no carrinho
@@ -23,23 +22,19 @@ class CartViewModel: ObservableObject {
             items.append(cartItem) // Adiciona o novo item à lista
         }
     }
-
     // Função para remover um item do carrinho dado seu índice
     func removeItem(at index: Int) {
         items.remove(at: index) // Remove o item do array
     }
-
     // Função para remover todos os itens do carrinho
     func removeAll() {
         items.removeAll() // Limpa todos os itens
     }
-
     // Propriedade computada que calcula o preço total do carrinho
     var totalPrice: Double {
         items.reduce(0) { $0 + $1.subTotal } // Soma todos os subtotais dos itens
     }
 }
-
 // Estrutura que representa a tela do carrinho de compras
 struct CartView: View {
     @EnvironmentObject var cartViewModel: CartViewModel // Acesso ao modelo de dados do carrinho
@@ -87,7 +82,7 @@ struct CartView: View {
                 }
                 .padding() // Adiciona espaçamento ao redor do HStack
             }
-            .navigationBarTitle("Carrinho") // Define o título da barra de navegação
+            .navigationBarTitle("") // Define o título da barra de navegação
             .navigationBarItems(trailing: // Itens da barra de navegação à direita
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss() // Fecha a tela do carrinho
@@ -99,7 +94,6 @@ struct CartView: View {
             .padding(.bottom, 20) // Ajusta a margem inferior da tela
         }
     }
-
     // Função para deletar um item da lista
     private func deleteItem(at offsets: IndexSet) {
         offsets.forEach { index in
@@ -107,7 +101,6 @@ struct CartView: View {
         }
     }
 }
-
 // Estrutura que representa uma linha de item do carrinho
 struct CartItemRow: View {
     let cartItem: CartItem // Recebe um item do carrinho para exibir
@@ -142,15 +135,13 @@ struct CartItemRow: View {
         .padding(.vertical, 8) // Adiciona espaçamento vertical à linha
     }
 }
-
 // Estrutura que representa a tela de checkout
 struct CheckoutView: View {
     var body: some View {
         Text("Finalizar Compra") // Texto para indicar que é a tela de checkout
-            .navigationBarTitle("Checkout") // Define o título da barra de navegação
+            .navigationBarTitle("Finalizar Compra") // Define o título da barra de navegação
     }
 }
-
 // Estrutura para pré-visualização do carrinho
 struct CartView_Previews: PreviewProvider {
     static var previews: some View {
