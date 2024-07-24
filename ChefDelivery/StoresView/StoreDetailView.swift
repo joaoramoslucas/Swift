@@ -64,7 +64,7 @@ struct StoreDetailView: View {
                 leading: Button(action: {
                     presentationMode.wrappedValue.dismiss() // Dismissa a tela atual (opcional)
                 }) {
-                    HStack(spacing: 4) {
+                    HStack(spacing: 2) {
                         Image(systemName: "house")
                         Text("Lojas")
                             .bold()

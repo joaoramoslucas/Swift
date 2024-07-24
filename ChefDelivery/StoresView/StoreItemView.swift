@@ -4,17 +4,11 @@
 //
 //  Created by Joao Lucas on 29/05/23.
 //
-
-import SwiftUI // Importa o framework SwiftUI para construir a interface do usuário
+import SwiftUI
 
 // Estrutura que representa a visualização de um item de loja
 struct StoreItemView: View {
-    
-    // MARK: - Attributes
-    
     var store: StoreType // Atributo para armazenar as informações da loja
-
-    // MARK: - BodyView
     
     var body: some View {
         HStack { // Utiliza um HStack para organizar os elementos em linha horizontal

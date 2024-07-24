@@ -9,13 +9,10 @@ import SwiftUI // Importa o framework SwiftUI para construir a interface do usu�
 
 // Estrutura que representa a visualização do container de lojas
 struct StoresContainerView: View {
-    
-    var title = "Lojas" // Título da seção de lojas
-
     // Corpo da visualização
     var body: some View {
         VStack(alignment: .leading) { // Utiliza um VStack para empilhar elementos verticalmente, alinhando à esquerda
-            Text(title) // Exibe o título da seção
+            Text("Lojas") // Exibe o título da seção
                 .font(.headline) // Define a fonte como headline
             
             VStack(alignment: .leading, spacing: 30) { // Outro VStack para empilhar os itens das lojas
