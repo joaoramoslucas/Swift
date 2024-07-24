@@ -41,11 +41,11 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "line.horizontal.3") // Ícone do menu
                             .font(.largeTitle) // Define o tamanho da fonte do ícone
-                            .foregroundColor(.red) // Cor do ícone
+                            .foregroundColor(.black) // Cor do ícone
                             .padding() // Adiciona espaçamento interno
                     }
                     .frame(height: 30) // Define a altura do botão
-                    .position(x: 50, y: 15) // Posição do botão no layout
+                    .position(x: 30, y: 15) // Posição do botão no layout
 
                     // Menu lateral
                     if isMenuOpen { // Verifica se o menu está aberto

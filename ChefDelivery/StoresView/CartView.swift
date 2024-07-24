@@ -82,7 +82,7 @@ struct CartView: View {
                 }
                 .padding() // Adiciona espaçamento ao redor do HStack
             }
-            .navigationBarTitle("") // Define o título da barra de navegação
+            .navigationBarTitle("Finalizar Compra") // Define o título da barra de navegação
             .navigationBarItems(trailing: // Itens da barra de navegação à direita
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss() // Fecha a tela do carrinho
@@ -111,8 +111,8 @@ struct CartItemRow: View {
             Image(cartItem.product.image)
                 .resizable() // Permite que a imagem seja redimensionada
                 .scaledToFit() // Mantém a proporção da imagem
-                .frame(width: 80, height: 80) // Define a largura e altura da imagem
-                .cornerRadius(10) // Arredonda os cantos da imagem
+                .cornerRadius(10)
+                .frame(width: 120, height: 120) // Define a largura e altura da imagem
 
             VStack(alignment: .leading) { // Organiza os textos verticalmente
                 Text(cartItem.product.name) // Nome do produto

@@ -8,15 +8,16 @@ struct LoginView: View {
 
     var body: some View {
         ZStack { // Camada de sobreposição para gerenciar a exibição de elementos
-            Color(red: 0.85, green: 0.75, blue: 0.69) // Cor bege de fundo
+            LinearGradient(gradient: Gradient(colors: [Color.red, Color.white]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
         
             VStack { // Organiza os elementos verticalmente
                 Spacer() // Espaço flexível que empurra os elementos para cima
 
                 // Ícone de usuário no topo da tela
-                Image(systemName: "person.circle.fill")
+                Image("logo")
                     .resizable() // Permite que a imagem seja redimensionada
-                    .frame(width: 100, height: 100) // Define o tamanho da imagem
+                    .frame(width: 200, height: 200) // Define o tamanho da imagem
                     .padding(.bottom, 50) // Adiciona espaço abaixo da imagem
 
                 // Contêiner para os campos de entrada e botões
@@ -60,9 +61,40 @@ struct LoginView: View {
 
                     // Contêiner horizontal para os botões sociais
                     HStack { // Organiza os botões horizontalmente
-                        socialButton(title: "", icon: "globe", color: .red) // Botão para login com Google
-                        socialButton(title: "", icon: "f.square", color: .blue) // Botão para login com Facebook
-                        socialButton(title: "", icon: "phone", color: .green) // Botão para login com telefone
+                        Button(action: {
+                            //
+                        }) {
+                            Image("imagemGoogle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30) // Ajuste o tamanho conforme necessário
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(70)
+                        }
+                        Button(action: {
+                            //
+                        }) {
+                            Image("imagemFacebook")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 50, height: 50)
+                                .padding()
+                                .background(.white)
+                                .cornerRadius(70)
+                        }
+                        Button(action: {
+                            //
+                        }) {
+                            Image("imagemTelefone")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .frame(width: 30, height: 30)
+                                .padding()
+                                .background(.white)
+                                .cornerRadius(70)
+                        }
                     }
                 }
                 .padding(.bottom, 100) // Adiciona espaçamento na parte inferior do contêiner
