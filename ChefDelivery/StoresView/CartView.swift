@@ -127,7 +127,7 @@ struct CartItemRow: View {
 
                     Spacer() // Espaço flexível entre preço e quantidade
 
-                    Text("Qtd: \(cartItem.quantity)") // Exibe a quantidade do produto
+                    Text("Quantidade: \(cartItem.quantity)") // Exibe a quantidade do produto
                         .font(.subheadline) // Define o estilo da fonte como subtítulo
                 }
             }
@@ -140,16 +140,5 @@ struct CheckoutView: View {
     var body: some View {
         Text("Finalizar Compra") // Texto para indicar que é a tela de checkout
             .navigationBarTitle("Finalizar Compra") // Define o título da barra de navegação
-    }
-}
-// Estrutura para pré-visualização do carrinho
-struct CartView_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = CartViewModel() // Cria uma instância do CartViewModel
-        // Adiciona alguns itens para pré-visualização
-        viewModel.addItem(product: ProductType(id: 1, name: "Product A", description: "Description of Product A", image: "productA", price: 10.0), quantity: 2)
-        viewModel.addItem(product: ProductType(id: 2, name: "Product B", description: "Description of Product B", image: "productB", price: 15.0), quantity: 1)
-        return CartView() // Retorna a visualização do carrinho
-            .environmentObject(viewModel) // Passa o viewModel como objeto de ambiente
     }
 }

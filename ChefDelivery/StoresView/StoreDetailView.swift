@@ -1,75 +1,80 @@
-//
-//  StoreDetailView.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 29/05/23.
-//
-
 import SwiftUI
 
-// Estrutura que representa a visualização de detalhes da loja
 struct StoreDetailView: View {
     let store: StoreType // Recebe a loja cujos detalhes serão exibidos
+    @Environment(\.presentationMode) var presentationMode // Para controlar a apresentação do modal
     
     var body: some View {
-        ScrollView(showsIndicators: false) { // Utiliza um ScrollView para permitir rolagem
-            VStack(alignment: .leading) { // Um VStack para empilhar elementos verticalmente
-                // Imagem do cabeçalho da loja
-                Image(store.headerImage)
-                    .resizable() // Permite que a imagem seja redimensionada
-                    .scaledToFit() // Escala a imagem para caber no espaço
-                
-                // HStack para exibir o nome da loja e seu logotipo
-                HStack {
-                    Text(store.name) // Nome da loja
-                        .font(.title) // Define a fonte como título
-                        .bold() // Define o texto como negrito
-                    
-                    Spacer() // Espaçador para empurrar o logotipo para a direita
-                    
-                    // Imagem do logotipo da loja
-                    Image(store.logoImage)
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading) {
+                    // Imagem do cabeçalho da loja
+                    Image(store.headerImage)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 40, height: 40) // Define o tamanho da imagem
-                        .clipShape(Circle()) // Arredonda a imagem em formato circular
-                        .shadow(radius: 4) // Adiciona uma sombra à imagem
-                }
-                .padding(.vertical, 8) // Adiciona preenchimento vertical
-                .padding(.horizontal) // Adiciona preenchimento horizontal
-                
-                // HStack para exibir a localização e a avaliação da loja
-                HStack {
-                    Text(store.location) // Localização da loja
                     
-                    Spacer() // Espaçador
+                    // HStack para exibir o nome da loja e seu logotipo
+                    HStack {
+                        Text(store.name)
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(.primary) // Cor do texto padrão da barra de navegação
+                        
+                        Spacer()
+                        
+                        // Imagem do logotipo da loja
+                        Image(store.logoImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                            .shadow(radius: 4)
+                    }
+                    .padding(.vertical, 8)
+                    .padding(.horizontal)
                     
-                    // Exibe as estrelas de avaliação da loja
-                    ForEach(1...store.stars, id: \.self) { _ in
-                        Image(systemName: "star.fill") // Ícone de estrela preenchida
-                            .foregroundColor(.yellow) // Define a cor da estrela como amarelo
-                            .font(.caption) // Define o tamanho da fonte como pequeno
+                    // HStack para exibir a localização e a avaliação da loja
+                    HStack {
+                        Text(store.location)
+                        
+                        Spacer()
+                        
+                        ForEach(1...store.stars, id: \.self) { _ in
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                                .font(.caption)
+                        }
+                    }
+                    .padding(.vertical, 8)
+                    .padding(.horizontal)
+                    
+                    // Itera sobre os produtos da loja
+                    ForEach(store.products) { product in
+                        NavigationLink(destination: ProductDetailView(product: product)) {
+                            ProductRow(product: product)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-                .padding(.vertical, 8) // Adiciona preenchimento vertical
-                .padding(.horizontal) // Adiciona preenchimento horizontal
-                
-                // Itera sobre os produtos da loja
-                ForEach(store.products) { product in
-                    // Cria um link de navegação para a visualização de detalhes do produto
-                    NavigationLink(destination: ProductDetailView(product: product)) {
-                        ProductRow(product: product) // Exibe a linha do produto
-                    }
-                    .buttonStyle(PlainButtonStyle()) // Remove o estilo de botão padrão da navegação
-                }
+                .padding(.bottom, 20) // Adiciona um padding extra na parte inferior
             }
-            .navigationTitle(store.name) // Define o título da navegação
-            .navigationBarTitleDisplayMode(.inline) // Define o modo de exibição do título
+            .navigationBarTitle(store.name) // Define o título da barra de navegação como o nome da loja
+            .navigationBarTitleDisplayMode(.inline) // Exibe o título na mesma linha que o botão "Lojas"
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(
+                leading: Button(action: {
+                    presentationMode.wrappedValue.dismiss() // Dismissa a tela atual (opcional)
+                }) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "house")
+                        Text("Lojas")
+                            .bold()
+                    }
+                    .foregroundColor(.red) // Cor do texto padrão da barra de navegação
+                }
+            )
         }
     }
-}
 
-// Estrutura que representa uma linha de produto
 struct ProductRow: View {
     let product: ProductType // Recebe o produto a ser exibido
     
@@ -110,7 +115,6 @@ struct ProductRow: View {
     }
 }
 
-// Estrutura para pré-visualização do StoreDetailView
 struct StoreDetailView_Previews: PreviewProvider {
     static var previews: some View {
         StoreDetailView(store: storesMock[0]) // Exibe a pré-visualização da StoreDetailView com a primeira loja mock
