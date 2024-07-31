@@ -22,7 +22,7 @@ struct LoginView: View {
 
                 // Contêiner para os campos de entrada e botões
                 VStack(spacing: 20) { // Organiza elementos verticalmente com espaçamento
-                    // Campo de texto para o email
+                    
                     TextField("Email", text: $email) // Campo de texto que liga a variável email
                         .padding() // Adiciona espaçamento interno
                         .background(Color.white) // Cor de fundo branca para o campo de email
@@ -34,9 +34,8 @@ struct LoginView: View {
                         .padding(.horizontal, 20) // Adiciona espaçamento horizontal
                         .foregroundColor(.black) // Cor do texto escura
 
-                    // Campo de texto para a senha
                     SecureField("Senha", text: $password) // Campo seguro para entrada de senha
-                        .padding() // Adiciona espaçamento interno
+                        .padding() 
                         .background(Color.white) // Cor de fundo branca para o campo de senha
                         .cornerRadius(10) // Arredonda os cantos do campo
                         .overlay(
@@ -78,7 +77,7 @@ struct LoginView: View {
                             Image("imagemFacebook")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50)
+                                .frame(width: 40, height: 40)
                                 .padding()
                                 .background(.white)
                                 .cornerRadius(70)
@@ -90,14 +89,13 @@ struct LoginView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 30, height: 30)
-                                .frame(width: 30, height: 30)
                                 .padding()
                                 .background(.white)
                                 .cornerRadius(70)
                         }
                     }
                 }
-                .padding(.bottom, 100) // Adiciona espaçamento na parte inferior do contêiner
+                .padding(.bottom) // Adiciona espaçamento na parte inferior do contêiner
             }
         }
     }

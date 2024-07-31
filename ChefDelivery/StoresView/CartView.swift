@@ -1,40 +1,10 @@
+// CartView.swift
+// ChefDelivery
 //
-//  CartView.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 29/05/23.
+// Created by Joao Lucas on 29/05/23.
 //
 import SwiftUI
 
-// Classe que representa o ViewModel do carrinho, responsável pela lógica do carrinho de compras
-class CartViewModel: ObservableObject {
-    @Published var items: [CartItem] = [] // Array que armazena os itens do carrinho
-    
-    // Função para adicionar um item ao carrinho
-    func addItem(product: ProductType, quantity: Int) {
-        // Verifica se o item já existe no carrinho
-        if let index = items.firstIndex(where: { $0.product.id == product.id }) {
-            // Se existir, atualiza a quantidade do item já presente
-            items[index].quantity += quantity
-        } else {
-            // Se não existir, cria um novo CartItem e adiciona ao carrinho
-            let cartItem = CartItem(product: product, quantity: quantity)
-            items.append(cartItem) // Adiciona o novo item à lista
-        }
-    }
-    // Função para remover um item do carrinho dado seu índice
-    func removeItem(at index: Int) {
-        items.remove(at: index) // Remove o item do array
-    }
-    // Função para remover todos os itens do carrinho
-    func removeAll() {
-        items.removeAll() // Limpa todos os itens
-    }
-    // Propriedade computada que calcula o preço total do carrinho
-    var totalPrice: Double {
-        items.reduce(0) { $0 + $1.subTotal } // Soma todos os subtotais dos itens
-    }
-}
 // Estrutura que representa a tela do carrinho de compras
 struct CartView: View {
     @EnvironmentObject var cartViewModel: CartViewModel // Acesso ao modelo de dados do carrinho
@@ -69,8 +39,6 @@ struct CartView: View {
                             .foregroundColor(.white) // Define a cor do texto como branca
                             .cornerRadius(10) // Arredonda os cantos do botão
                     }
-                    Spacer() // Espaço flexível entre os botões
-
                     // Botão para finalizar o pedido que navega para CheckoutView
                     NavigationLink(destination: CheckoutView()) {
                         Text("Finalizar Pedido") // Texto do botão
@@ -81,8 +49,8 @@ struct CartView: View {
                     }
                 }
                 .padding() // Adiciona espaçamento ao redor do HStack
+                .frame(maxWidth: .infinity, alignment: .center) // Centraliza o HStack horizontalmente
             }
-            .navigationBarTitle("Finalizar Compra") // Define o título da barra de navegação
             .navigationBarItems(trailing: // Itens da barra de navegação à direita
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss() // Fecha a tela do carrinho
@@ -101,44 +69,11 @@ struct CartView: View {
         }
     }
 }
-// Estrutura que representa uma linha de item do carrinho
-struct CartItemRow: View {
-    let cartItem: CartItem // Recebe um item do carrinho para exibir
-
-    var body: some View {
-        HStack(spacing: 10) { // Organiza os elementos da linha horizontalmente
-            // Exibe a imagem do produto
-            Image(cartItem.product.image)
-                .resizable() // Permite que a imagem seja redimensionada
-                .scaledToFit() // Mantém a proporção da imagem
-                .cornerRadius(10)
-                .frame(width: 120, height: 120) // Define a largura e altura da imagem
-
-            VStack(alignment: .leading) { // Organiza os textos verticalmente
-                Text(cartItem.product.name) // Nome do produto
-                    .font(.headline) // Define o estilo da fonte como título
-
-                Text(cartItem.product.description) // Descrição do produto
-                    .foregroundColor(.gray) // Define a cor do texto como cinza
-
-                HStack { // Organiza informações de preço e quantidade
-                    Text(cartItem.product.formatPrice) // Exibe o preço do produto
-                        .font(.subheadline) // Define o estilo da fonte como subtítulo
-
-                    Spacer() // Espaço flexível entre preço e quantidade
-
-                    Text("Quantidade: \(cartItem.quantity)") // Exibe a quantidade do produto
-                        .font(.subheadline) // Define o estilo da fonte como subtítulo
-                }
-            }
-        }
-        .padding(.vertical, 8) // Adiciona espaçamento vertical à linha
-    }
-}
-// Estrutura que representa a tela de checkout
-struct CheckoutView: View {
-    var body: some View {
-        Text("Finalizar Compra") // Texto para indicar que é a tela de checkout
-            .navigationBarTitle("Finalizar Compra") // Define o título da barra de navegação
+// PreviewProvider para visualizar a tela no Xcode
+struct CartView_Previews: PreviewProvider {
+    static var previews: some View {
+        let cartViewModel = CartViewModel()
+        return CartView()
+            .environmentObject(cartViewModel)
     }
 }

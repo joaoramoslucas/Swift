@@ -26,7 +26,7 @@ struct ProductDetailView: View {
                     .scaledToFit() // Escala a imagem para caber no espaço
                     .cornerRadius(13) // Arredonda os cantos da imagem
                     .shadow(color: .black.opacity(0.5), radius: 10, x: 4, y: 4) // Adiciona sombra
-                    .frame(height: 250) // Define a altura da imagem
+                    .frame(height: 270) // Define a altura da imagem
                 
                 // Título e descrição do produto
                 VStack(alignment: .leading, spacing: 8) {
@@ -36,7 +36,7 @@ struct ProductDetailView: View {
                     
                     Text(product.description) // Descrição do produto
                         .foregroundColor(.secondary) // Cor secundária para o texto
-                        .font(.body) // Define a fonte como corpo
+                        .font(.headline) // Define a fonte como corpo
                 }
                 .padding(.horizontal) // Preenchimento horizontal
                 
