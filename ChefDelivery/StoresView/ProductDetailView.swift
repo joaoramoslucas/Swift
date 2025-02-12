@@ -110,7 +110,7 @@ struct ProductDetailView: View {
                         .font(.headline) // Tamanho da fonte
                         .padding() // Preenchimento interno
                         .frame(maxWidth: .infinity) // Largura máxima
-                        .background(Color.red) // Cor de fundo
+                        .background(Color.green) // Cor de fundo
                         .cornerRadius(12) // Arredonda os cantos
                         .padding(.horizontal) // Preenchimento horizontal
                         .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 4) // Adiciona sombra

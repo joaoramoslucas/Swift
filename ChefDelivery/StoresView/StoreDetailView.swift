@@ -3,6 +3,7 @@ import SwiftUI
 struct StoreDetailView: View {
     let store: StoreType // Recebe a loja cujos detalhes serão exibidos
     @Environment(\.presentationMode) var presentationMode // Para controlar a apresentação do modal
+    @State private var isDarkMode: Bool = false
     
     var body: some View {
             ScrollView(showsIndicators: false) {
@@ -16,8 +17,7 @@ struct StoreDetailView: View {
                     HStack {
                         Text(store.name)
                             .font(.title)
-                            .bold()
-                            .foregroundColor(.primary) // Cor do texto padrão da barra de navegação
+                            .foregroundColor(Color.primary)
                         
                         Spacer()
                         
@@ -35,6 +35,7 @@ struct StoreDetailView: View {
                     // HStack para exibir a localização e a avaliação da loja
                     HStack {
                         Text(store.location)
+                            .foregroundColor(Color.primary)
                         
                         Spacer()
                         
@@ -96,7 +97,7 @@ struct ProductRow: View {
                 
                 Text(product.description) // Descrição do produto
                     .font(.subheadline) // Define a fonte como sub-título
-                    .foregroundColor(.black.opacity(0.5)) // Define a cor como um cinza claro
+                    .foregroundColor(Color.secondary) // Define a cor como um cinza claro
                     .lineLimit(2) // Limita o número de linhas exibidas
                 
                 Text(product.formatPrice) // Preço do produto formatado
@@ -108,7 +109,7 @@ struct ProductRow: View {
             Spacer() // Espaçador para empurrar o conteúdo para a esquerda
         }
         .padding(.vertical, 8) // Adiciona preenchimento vertical à linha do produto
-        .background(Color.white) // Define o fundo como branco
+        .background(Color(UIColor.systemBackground)) // Define o fundo como branco
         .cornerRadius(12) // Arredonda os cantos do fundo
         .shadow(color: .black.opacity(0.1), radius: 10, x: 2, y: 4) // Adiciona sombra à linha
         .padding(.horizontal) // Adiciona preenchimento horizontal

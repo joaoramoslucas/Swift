@@ -56,7 +56,7 @@ struct CartView: View {
                     self.presentationMode.wrappedValue.dismiss() // Fecha a tela do carrinho
                 }) {
                     Image(systemName: "xmark") // Ícone "x" para fechar a tela
-                        .foregroundColor(.black) // Define a cor do ícone como preto
+                        .foregroundColor(Color.primary) // Define a cor do ícone como preto
                 }
             )
             .padding(.bottom, 20) // Ajusta a margem inferior da tela

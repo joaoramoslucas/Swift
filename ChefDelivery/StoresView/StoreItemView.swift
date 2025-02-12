@@ -23,7 +23,6 @@ struct StoreItemView: View {
                 Text(store.name) // Exibe o nome da loja
                     .font(.subheadline) // Define a fonte como subheadline
             }
-            
             Spacer() // Adiciona um espaçador para empurrar os elementos à esquerda
         }
     }

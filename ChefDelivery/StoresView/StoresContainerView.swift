@@ -13,7 +13,7 @@ struct StoresContainerView: View {
     var body: some View {
         VStack(alignment: .leading) { // Utiliza um VStack para empilhar elementos verticalmente, alinhando à esquerda
             Text("Lojas") // Exibe o título da seção
-                .font(.headline) // Define a fonte como headline
+                .foregroundColor(Color.primary) // Define a fonte como headline
             
             VStack(alignment: .leading, spacing: 30) { // Outro VStack para empilhar os itens das lojas
                 // Itera sobre os dados de lojas mockados
@@ -24,6 +24,7 @@ struct StoresContainerView: View {
                     } label: {
                         StoreItemView(store: mock) // Exibe a visualização do item da loja
                     }
+                    .foregroundColor(Color.primary)
                 }
             }
         }

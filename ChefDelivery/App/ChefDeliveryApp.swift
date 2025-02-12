@@ -16,7 +16,7 @@ struct ChefDeliveryApp: App {
     var body: some Scene {
         WindowGroup { // Agrupa as janelas do aplicativo
             if isLoggedIn { // Verifica se o usuário está logado
-                ContentView() // Se logado, exibe a tela principal do aplicativo
+                ContentView() // Se logado, exibe a tela principal do aplicativos
                     .environmentObject(CartViewModel()) // Passa o ViewModel do carrinho como objeto de ambiente
             } else {
                 LoginView(isLoggedIn: $isLoggedIn) // Se não logado, exibe a tela de login
