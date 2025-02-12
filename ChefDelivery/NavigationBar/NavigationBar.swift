@@ -14,30 +14,21 @@ struct NavigationBar: View {
             Spacer() // Adiciona um espaço flexível à esquerda
 
             // Botão que exibe o endereço
-            Button("R. Vergueiro, 3185") {
-                // Ação do botão (pode ser implementada no futuro)
-            }
-            .font(.subheadline) // Define o tamanho da fonte
+            Text("Chef Delivery")
+            .font(.title) // Define o tamanho da fonte
             .fontWeight(.semibold) // Define o peso da fonte
-            .foregroundColor(.black) // Define a cor do texto como preto
+            .foregroundColor(Color.primary) // Define a cor do texto como preto
             
             Spacer() // Adiciona um espaço flexível à direita
 
             // Botão que exibe o ícone de notificação
-            Button(action: {}) {
+            Button(action: {
+                //logica do botao
+            }) {
                 Image(systemName: "bell.badge") // Ícone de notificação do sistema
                     .font(.title3) // Define o tamanho da fonte do ícone
-                    .foregroundColor(.red) // Define a cor do ícone como vermelho
+                    .foregroundColor(.orange) // Define a cor do ícone como vermelho
             }
         }
-    }
-}
-
-// Estrutura para pré-visualização da barra de navegação
-struct NavigationBar_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationBar() // Cria uma instância da NavigationBar
-            .previewLayout(.sizeThatFits) // Ajusta a pré-visualização para se ajustar ao conteúdo
-            .padding() // Adiciona um preenchimento em torno da barra
     }
 }

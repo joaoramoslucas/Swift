@@ -54,13 +54,14 @@ struct CheckoutView: View {
                     .padding()
                     .background(Color.green)
                     .foregroundColor(.white)
+                    .bold()
                     .cornerRadius(10)
             }
             .alert(isPresented: $checkoutViewModel.isOrderConfirmed) {
                 Alert(
-                    title: Text("Pedido Confirmado"),
-                    message: Text("Seu pedido foi confirmado com sucesso!"),
-                    dismissButton: .default(Text("OK")) {
+                    title: Text("Pedido Finalizado"),
+                    message: Text("Sua compra foi realizada com sucesso! Obrigado pela preferência"),
+                    dismissButton: .default(Text("Fechar janela")) {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 )
@@ -72,7 +73,6 @@ struct CheckoutView: View {
     }
 }
 
-
 class CheckoutViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var address: String = ""
@@ -83,14 +83,5 @@ class CheckoutViewModel: ObservableObject {
     
     func confirmOrder() {
         isOrderConfirmed = true
-    }
-}
-
-struct CheckoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            CheckoutView()
-                .environmentObject(CartViewModel())
-        }
     }
 }
