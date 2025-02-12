@@ -13,7 +13,6 @@ struct LoginView: View {
         
             VStack { // Organiza os elementos verticalmente
                 Spacer() // Espaço flexível que empurra os elementos para cima
-
                 // Ícone de usuário no topo da tela
                 Image("logo")
                     .resizable() // Permite que a imagem seja redimensionada
@@ -29,7 +28,7 @@ struct LoginView: View {
                         .cornerRadius(10) // Arredonda os cantos do campo
                         .overlay(
                             RoundedRectangle(cornerRadius: 10) // Adiciona uma borda arredondada
-                                .stroke(Color.black.opacity(0.5), lineWidth: 1) // Define a cor e espessura da borda
+                                .stroke(Color.orange.opacity(0.5), lineWidth: 1) // Define a cor e espessura da borda
                         )
                         .padding(.horizontal, 20) // Adiciona espaçamento horizontal
                         .foregroundColor(.black) // Cor do texto escura
@@ -40,11 +39,10 @@ struct LoginView: View {
                         .cornerRadius(10) // Arredonda os cantos do campo
                         .overlay(
                             RoundedRectangle(cornerRadius: 10) // Adiciona uma borda arredondada
-                                .stroke(Color.black.opacity(0.5), lineWidth: 1) // Define a cor e espessura da borda
+                                .stroke(Color.orange.opacity(0.5), lineWidth: 1) // Define a cor e espessura da borda
                         )
                         .padding(.horizontal, 20) // Adiciona espaçamento horizontal
                         .foregroundColor(.black) // Cor do texto escura
-
                     // Botão de login
                     Button(action: {
                         isLoggedIn = true // Muda o estado para logado ao clicar no botão
@@ -57,7 +55,7 @@ struct LoginView: View {
                             .background(Color.orange) // Define a cor de fundo do botão como azul
                             .cornerRadius(10) // Arredonda os cantos do botão
                     }
-
+                    .padding()
                     // Contêiner horizontal para os botões sociais
                     HStack { // Organiza os botões horizontalmente
                         Button(action: {
@@ -66,9 +64,9 @@ struct LoginView: View {
                             Image("imagemGoogle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50) // Ajuste o tamanho conforme necessário
+                                .frame(width: 30, height: 30) // Ajuste o tamanho conforme necessário
                                 .background(Color.white)
-                                .cornerRadius(70)
+                                .cornerRadius(50)
                         }
                         .padding()
                         Button(action: {
@@ -77,19 +75,20 @@ struct LoginView: View {
                             Image("imagemFacebook")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50)
+                                .frame(width: 30, height: 30)
                                 .background(.white)
-                                .cornerRadius(70)
+                                .cornerRadius(50)
                         }
+                        .padding()
                         Button(action: {
                             //
                         }) {
                             Image("imagemTelefone")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50)
+                                .frame(width: 30, height: 30)
                                 .background(.white)
-                                .cornerRadius(70)
+                                .cornerRadius(50)
                         }
                         .padding()
                     }
@@ -98,7 +97,6 @@ struct LoginView: View {
             }
         }
     }
-    
     // Função que cria um botão social genérico
     private func socialButton(title: String, icon: String, color: Color) -> some View {
         Button(action: {
@@ -106,7 +104,6 @@ struct LoginView: View {
         }) {
             HStack { // Organiza ícone e texto horizontalmente
                 Image(systemName: icon) // Exibe o ícone do botão
-                // Text(title) // Exibe o título do botão
             }
             .frame(width: 70, height: 50) // Define a largura e altura do botão
             .cornerRadius(100) // Arredonda os cantos do botão
