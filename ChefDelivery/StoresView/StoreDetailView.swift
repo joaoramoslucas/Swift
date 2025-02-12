@@ -70,7 +70,7 @@ struct StoreDetailView: View {
                         Text("Lojas")
                             .bold()
                     }
-                    .foregroundColor(.red) // Cor do texto padrão da barra de navegação
+                    .foregroundColor(.orange) // Cor do texto padrão da barra de navegação
                 }
             )
         }

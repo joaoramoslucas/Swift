@@ -35,7 +35,7 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "line.horizontal.3")
                             .font(.largeTitle)
-                            .foregroundColor(.red)
+                            .foregroundColor(.orange)
                             .padding()
                     }
                     .frame(height: 30)

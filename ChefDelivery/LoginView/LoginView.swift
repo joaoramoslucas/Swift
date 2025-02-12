@@ -8,7 +8,7 @@ struct LoginView: View {
 
     var body: some View {
         ZStack { // Camada de sobreposição para gerenciar a exibição de elementos
-            LinearGradient(gradient: Gradient(colors: [Color.red, Color.white]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color.white]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
         
             VStack { // Organiza os elementos verticalmente
@@ -54,7 +54,7 @@ struct LoginView: View {
                             .foregroundColor(.white) // Define a cor do texto como branca
                             .padding() // Adiciona espaçamento interno ao botão
                             .frame(width: 200, height: 50) // Define a largura e altura do botão
-                            .background(Color.red) // Define a cor de fundo do botão como azul
+                            .background(Color.orange) // Define a cor de fundo do botão como azul
                             .cornerRadius(10) // Arredonda os cantos do botão
                     }
 
@@ -66,19 +66,18 @@ struct LoginView: View {
                             Image("imagemGoogle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30) // Ajuste o tamanho conforme necessário
-                                .padding()
+                                .frame(width: 50, height: 50) // Ajuste o tamanho conforme necessário
                                 .background(Color.white)
                                 .cornerRadius(70)
                         }
+                        .padding()
                         Button(action: {
                             //
                         }) {
                             Image("imagemFacebook")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 40, height: 40)
-                                .padding()
+                                .frame(width: 50, height: 50)
                                 .background(.white)
                                 .cornerRadius(70)
                         }
@@ -88,11 +87,11 @@ struct LoginView: View {
                             Image("imagemTelefone")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .padding()
+                                .frame(width: 50, height: 50)
                                 .background(.white)
                                 .cornerRadius(70)
                         }
+                        .padding()
                     }
                 }
                 .padding(.bottom) // Adiciona espaçamento na parte inferior do contêiner
@@ -109,11 +108,7 @@ struct LoginView: View {
                 Image(systemName: icon) // Exibe o ícone do botão
                 // Text(title) // Exibe o título do botão
             }
-            .font(.headline) // Define o estilo da fonte como título
-            .foregroundColor(.white) // Define a cor do texto como branca
-            .padding() // Adiciona espaçamento interno ao botão
             .frame(width: 70, height: 50) // Define a largura e altura do botão
-            .background(color) // Define a cor de fundo do botão
             .cornerRadius(100) // Arredonda os cantos do botão
         }
     }
