@@ -12,11 +12,16 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 if isLoggedIn {
+                    Button(action: { isDarkMode.toggle() }) {
+                                  Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
+                                      .foregroundColor(.orange)
+                                      .position(x: 325, y: 17)
+                                      .font(.title3)
+                              }
                     VStack {
                         NavigationBar()
                             .padding(.horizontal, 15)
                             .adaptiveTextColor(isDarkMode: isDarkMode)
-                                                
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack(spacing: 20) {
                                 OrderTypeGridView()
@@ -49,17 +54,10 @@ struct ContentView: View {
                                     isMenuOpen = false
                                 }
                             }
-                        
                         VStack(spacing: 0) {
                             Spacer().frame(height: 10)
-                            
                             ScrollView {
                                 VStack(spacing: 0) {
-                                    Button(action: { isDarkMode.toggle() }) {
-                                        Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
-                                            .foregroundColor(.blue)
-                                    }
-
                                     Button("Ver Perfil") {}
                                         .buttonStyle(MenuButtonStyle(isDarkMode: isDarkMode))
                                     Divider()
@@ -86,7 +84,6 @@ struct ContentView: View {
                                 }
                                 .padding(.vertical)
                             }
-                            
                             Spacer().frame(height: 10)
                         }
                         .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height / 2)
