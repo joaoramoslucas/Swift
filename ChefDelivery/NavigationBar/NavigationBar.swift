@@ -16,7 +16,7 @@ struct NavigationBar: View {
             // Botão que exibe o endereço
             Text("Chef Delivery")
             .font(.title) // Define o tamanho da fonte
-            .fontWeight(.semibold) // Define o peso da fonte
+            .bold() // Define o peso da fonte
             .foregroundColor(Color.primary) // Define a cor do texto como preto
             
             Spacer() // Adiciona um espaço flexível à direita

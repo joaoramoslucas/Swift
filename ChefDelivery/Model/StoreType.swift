@@ -8,7 +8,7 @@
 import Foundation // Importa o framework Foundation para funcionalidades básicas
 
 // Estrutura que representa uma loja, conformando-se ao protocolo Identifiable
-struct StoreType: Identifiable {
+struct StoreType: Identifiable, Decodable {
     let id: Int // Identificador único da loja
     let name: String // Nome da loja
     let logoImage: String // Nome da imagem do logo da loja

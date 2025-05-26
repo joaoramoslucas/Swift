@@ -8,7 +8,7 @@
 import Foundation // Importa o framework Foundation para funcionalidades básicas
 
 // Estrutura que representa um produto, conformando-se ao protocolo Identifiable
-struct ProductType: Identifiable {
+struct ProductType: Identifiable, Decodable {
     let id: Int // Identificador único do produto
     let name: String // Nome do produto
     let description: String // Descrição do produto
@@ -31,3 +31,4 @@ struct CartItem {
         return Double(quantity) * product.price // Multiplica a quantidade pelo preço do produto
     }
 }
+

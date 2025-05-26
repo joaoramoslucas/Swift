@@ -1,112 +1,137 @@
 import SwiftUI
+import FirebaseAuth
 
-// Estrutura que representa a tela de login
 struct LoginView: View {
-    @Binding var isLoggedIn: Bool // Variável ligada ao estado de login, controla se o usuário está logado
-    @State private var email: String = "" // Armazena o email do usuário
-    @State private var password: String = "" // Armazena a senha do usuário
+    @Binding var isLoggedIn: Bool
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var errorMessage: String? = nil
+    @State private var showRegisterView: Bool = false
 
     var body: some View {
-        ZStack { // Camada de sobreposição para gerenciar a exibição de elementos
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.white]), startPoint: .top, endPoint: .bottom)
+        NavigationView {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color.orange, Color.white]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
-        
-            VStack { // Organiza os elementos verticalmente
-                Spacer() // Espaço flexível que empurra os elementos para cima
-                // Ícone de usuário no topo da tela
-                Image("logo")
-                    .resizable() // Permite que a imagem seja redimensionada
-                    .frame(width: 200, height: 200) // Define o tamanho da imagem
-                    .padding(.bottom, 50) // Adiciona espaço abaixo da imagem
 
-                // Contêiner para os campos de entrada e botões
-                VStack(spacing: 20) { // Organiza elementos verticalmente com espaçamento
-                    
-                    TextField("Email", text: $email) // Campo de texto que liga a variável email
-                        .padding() // Adiciona espaçamento interno
-                        .background(Color.white) // Cor de fundo branca para o campo de email
-                        .cornerRadius(10) // Arredonda os cantos do campo
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10) // Adiciona uma borda arredondada
-                                .stroke(Color.orange.opacity(0.5), lineWidth: 1) // Define a cor e espessura da borda
-                        )
-                        .padding(.horizontal, 20) // Adiciona espaçamento horizontal
-                        .foregroundColor(.black) // Cor do texto escura
+                VStack {
+                    Spacer()
 
-                    SecureField("Senha", text: $password) // Campo seguro para entrada de senha
-                        .padding() 
-                        .background(Color.white) // Cor de fundo branca para o campo de senha
-                        .cornerRadius(10) // Arredonda os cantos do campo
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10) // Adiciona uma borda arredondada
-                                .stroke(Color.orange.opacity(0.5), lineWidth: 1) // Define a cor e espessura da borda
-                        )
-                        .padding(.horizontal, 20) // Adiciona espaçamento horizontal
-                        .foregroundColor(.black) // Cor do texto escura
-                    // Botão de login
-                    Button(action: {
-                        isLoggedIn = true // Muda o estado para logado ao clicar no botão
-                    }) {
-                        Text("Login") // Texto do botão
-                            .font(.headline) // Define o estilo da fonte como título
-                            .foregroundColor(.white) // Define a cor do texto como branca
-                            .padding() // Adiciona espaçamento interno ao botão
-                            .frame(width: 200, height: 50) // Define a largura e altura do botão
-                            .background(Color.orange) // Define a cor de fundo do botão como azul
-                            .cornerRadius(10) // Arredonda os cantos do botão
+                    Image("logo")
+                        .resizable()
+                        .frame(width: 350, height: 350)
+                        .padding(.bottom, 50)
+
+                    VStack(spacing: 20) {
+                        TextField("Email", text: $email)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.orange.opacity(0.5), lineWidth: 1)
+                            )
+                            .padding(.horizontal, 20)
+                            .foregroundColor(.black)
+                            .keyboardType(.emailAddress)
+                            .autocapitalization(.none)
+
+                        SecureField("Senha", text: $password)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.orange.opacity(0.5), lineWidth: 1)
+                            )
+                            .padding(.horizontal, 20)
+                            .foregroundColor(.black)
+
+                        if let error = errorMessage {
+                            Text(error)
+                                .foregroundColor(.red)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 20)
+                        }
+
+                        Button(action: {
+                            login()
+                        }) {
+                            Text("Login")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 200, height: 50)
+                                .background(Color.orange)
+                                .cornerRadius(10)
+                        }
+
+                        NavigationLink(destination: RegisterView(), isActive: $showRegisterView) {
+                            Button("Criar nova conta") {
+                                showRegisterView = true
+                            }
+                            .foregroundColor(.blue)
+                            .padding(.top, 10)
+                        }
+
+                        HStack {
+                            Button(action: {
+                                //
+                            }) {
+                                Image("imagemGoogle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                    .background(Color.white)
+                                    .cornerRadius(50)
+                            }
+                            .padding()
+
+                            Button(action: {
+                                //
+                            }) {
+                                Image("imagemFacebook")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                    .background(Color.white)
+                                    .cornerRadius(50)
+                            }
+                            .padding()
+
+                            Button(action: {
+                                //
+                            }) {
+                                Image("imagemTelefone")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                    .background(Color.white)
+                                    .cornerRadius(50)
+                            }
+                            .padding()
+                        }
                     }
-                    .padding()
-                    // Contêiner horizontal para os botões sociais
-                    HStack { // Organiza os botões horizontalmente
-                        Button(action: {
-                            //
-                        }) {
-                            Image("imagemGoogle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30) // Ajuste o tamanho conforme necessário
-                                .background(Color.white)
-                                .cornerRadius(50)
-                        }
-                        .padding()
-                        Button(action: {
-                            //
-                        }) {
-                            Image("imagemFacebook")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .background(.white)
-                                .cornerRadius(50)
-                        }
-                        .padding()
-                        Button(action: {
-                            //
-                        }) {
-                            Image("imagemTelefone")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .background(.white)
-                                .cornerRadius(50)
-                        }
-                        .padding()
-                    }
+
+                    Spacer()
                 }
-                .padding(.bottom) // Adiciona espaçamento na parte inferior do contêiner
             }
         }
     }
-    // Função que cria um botão social genérico
-    private func socialButton(title: String, icon: String, color: Color) -> some View {
-        Button(action: {
-            // Ação do botão a ser implementada
-        }) {
-            HStack { // Organiza ícone e texto horizontalmente
-                Image(systemName: icon) // Exibe o ícone do botão
+
+    private func login() {
+        errorMessage = nil
+
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if let error = error {
+                errorMessage = error.localizedDescription
+                print("Erro no login:", error.localizedDescription)
+            } else {
+                print("Login realizado com sucesso!")
+                DispatchQueue.main.async {
+                    isLoggedIn = true
+                }
             }
-            .frame(width: 70, height: 50) // Define a largura e altura do botão
-            .cornerRadius(100) // Arredonda os cantos do botão
         }
     }
 }
