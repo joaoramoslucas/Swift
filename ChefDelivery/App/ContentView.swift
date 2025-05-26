@@ -28,6 +28,12 @@ struct ContentView: View {
                         }
                     }
                     
+                    Button(action: { isDarkMode.toggle() }) {
+                        Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
+                            .foregroundColor(.orange)
+                    }
+                    .position(x: 330, y: 15)
+                    
                     Button(action: {
                         withAnimation {
                             isMenuOpen.toggle()
@@ -55,11 +61,6 @@ struct ContentView: View {
                             
                             ScrollView {
                                 VStack(spacing: 0) {
-                                    Button(action: { isDarkMode.toggle() }) {
-                                        Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
-                                            .foregroundColor(.blue)
-                                    }
-
                                     Button("Ver Perfil") {}
                                         .buttonStyle(MenuButtonStyle(isDarkMode: isDarkMode))
                                     Divider()

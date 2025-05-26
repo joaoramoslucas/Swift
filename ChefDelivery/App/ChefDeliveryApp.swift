@@ -13,7 +13,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct ChefDeliveryApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate // ✅ Ativa o AppDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     @State private var isLoggedIn: Bool = false
 
