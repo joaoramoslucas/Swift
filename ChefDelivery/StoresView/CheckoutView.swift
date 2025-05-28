@@ -1,87 +1,27 @@
-//
-//  CheckoutView.swift
-//  ChefDelivery
-//
-//  Created by Jao on 31/07/24.
-//
 import SwiftUI
 
-// Estrutura que representa a tela de checkout
+enum AppRoute: Hashable {
+    case delivery
+    case payment
+}
+
 struct CheckoutView: View {
     @EnvironmentObject var cartViewModel: CartViewModel
     @StateObject private var checkoutViewModel = CheckoutViewModel()
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("Informações de Entrega")
-                .font(.headline)
-                .padding(.bottom, 10)
-            
-            TextField("Nome", text: $checkoutViewModel.name)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.bottom, 10)
-            
-            TextField("Endereço", text: $checkoutViewModel.address)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.bottom, 10)
-            
-            Text("Informações de Pagamento")
-                .font(.headline)
-                .padding(.vertical, 10)
-            
-            TextField("Número do Cartão", text: $checkoutViewModel.cardNumber)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.bottom, 10)
-            
-            TextField("Data de Validade (MM/AA)", text: $checkoutViewModel.expirationDate)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.bottom, 10)
-            
-            TextField("CVV", text: $checkoutViewModel.cvv)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.bottom, 10)
-            
-            NavigationLink(destination: StoresContainerView()) {
-                
-            }
-            
-            Button(action: {
-                checkoutViewModel.confirmOrder()
-                cartViewModel.removeAll()
-            }) {
-                Text("Confirmar Pedido")
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .bold()
-                    .cornerRadius(10)
-            }
-            .alert(isPresented: $checkoutViewModel.isOrderConfirmed) {
-                Alert(
-                    title: Text("Pedido Finalizado"),
-                    message: Text("Sua compra foi realizada com sucesso! Obrigado pela preferência"),
-                    dismissButton: .default(Text("Fechar janela")) {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                )
-            }
-            Spacer()
-        }
-        .padding()
-        .navigationBarTitle("Pagamento", displayMode: .inline)
-    }
-}
+    @State private var path = NavigationPath()
 
-class CheckoutViewModel: ObservableObject {
-    @Published var name: String = ""
-    @Published var address: String = ""
-    @Published var cardNumber: String = ""
-    @Published var expirationDate: String = ""
-    @Published var cvv: String = ""
-    @Published var isOrderConfirmed: Bool = false
-    
-    func confirmOrder() {
-        isOrderConfirmed = true
+    var body: some View {
+        NavigationStack(path: $path) {
+            DeliveryInfoView(checkoutViewModel: checkoutViewModel, path: $path)
+                .navigationDestination(for: AppRoute.self) { route in
+                    switch route {
+                    case .delivery:
+                        DeliveryInfoView(checkoutViewModel: checkoutViewModel, path: $path)
+                    case .payment:
+                        PaymentInfoView(checkoutViewModel: checkoutViewModel, path: $path)
+                            .environmentObject(cartViewModel)
+                    }
+                }
+        }
     }
 }
