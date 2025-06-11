@@ -32,7 +32,7 @@ struct ContentView: View {
                         Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
                             .foregroundColor(.orange)
                     }
-                    .position(x: 330, y: 15)
+                    .position(x: 380, y: 15)
                     
                     Button(action: {
                         withAnimation {
