@@ -1,11 +1,15 @@
-![Thumbnail GitHub](https://github.com/giovannamoeller/swiftui-navegacao-gerenciamento-estadonciamento-/assets/47362960/7ee58030-b9bc-4d61-a2e5-e778aecb3c8e)
-
 # ChefDelivery
 
 A aplicação ChefDelivery é a simulação de um aplicativo de restaurantes para o sistema operacional iOS que utiliza a linguagem Swift e o framework SwiftUI.
 
+## 🎥 Demonstração
+
+![Demonstração do App](./assets/gif.gif)
+
+
 ## 🔨 Funcionalidades do projeto
 
+- Sistema de Login e cadastro integrado com FireBase
 - Listagem das categorias de restaurantes;
 - Carrossel de imagens destacando os destaques do momento;
 - Listagem de restaurantes;
@@ -14,6 +18,7 @@ A aplicação ChefDelivery é a simulação de um aplicativo de restaurantes par
 - Exibição detalhada do produto, incluindo nome, imagem, descrição e preço;
 - Implementação de um menu de filtragem para selecionar a quantidade de estrelas desejada;
 - Exibição dos restaurantes filtrados de acordo com a seleção feita pelo usuário.
+- Tela de Pagamento Personalizada
 
 ## ✔️ Técnicas e tecnologias
 
@@ -30,8 +35,7 @@ A aplicação ChefDelivery é a simulação de um aplicativo de restaurantes par
 E muito mais! 
  
 ## 📁 Acesso ao projeto
-
-Você pode [baixar o zip](https://github.com/alura-cursos/swiftui-navegacao-gerenciamento-estado/archive/refs/heads/master.zip) com o código final do projeto ou [acessar o código fonte](https://github.com/alura-cursos/swiftui-navegacao-gerenciamento-estado).
+- Git clone do projeto
 
 ## 🛠️ Abrir e rodar o projeto
 
@@ -47,7 +51,3 @@ Quando você realizar o download do projeto, deverá descompactar o arquivo e en
 Com o projeto aberto no XCode, você consegue visualizar todas as pastas e arquivos.
 
 Para rodar o seu projeto, você deve clicar no botão de play na parte superior do XCode. Você também pode alterar o simulador em que o aplicativo será exibido, e então, o projeto será aberto no simulador de sua preferência.
-
-## 📚 Mais informações do curso
-
-Gostou do projeto e quer conhecer mais? Você pode [acessar o curso](https://cursos.alura.com.br/course/ios-swiftui-navegacao-gerenciamento-estados) que desenvolve o projeto!
