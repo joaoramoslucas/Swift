@@ -4,7 +4,8 @@ A aplicação ChefDelivery é a simulação de um aplicativo de restaurantes par
 
 ## 🎥 Demonstração
 
-![Demonstração do App](gif.gif)
+
+https://github.com/user-attachments/assets/4457d379-a5dc-4adc-82ef-d0bc5d8abb8f
 
 
 ## 🔨 Funcionalidades do projeto
