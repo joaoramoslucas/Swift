@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DeliveryInfoView: View {
     @ObservedObject var checkoutViewModel: CheckoutViewModel
+    @Environment(\.dismiss) private var dismiss
     @Binding var path: NavigationPath
 
     var body: some View {
