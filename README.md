@@ -1,10 +1,9 @@
 # ChefDelivery
 
-A aplicação ChefDelive
+A aplicação ChefDelivery é a simulação de um aplicativo de restaurantes para o sistema operacional iOS que utiliza a linguagem Swift e o framework SwiftUI.
 
 https://github.com/user-attachments/assets/a544724f-b100-4b4e-bfbc-70af66af3dae
 
-ry é a simulação de um aplicativo de restaurantes para o sistema operacional iOS que utiliza a linguagem Swift e o framework SwiftUI.
 
 ## 🔨 Funcionalidades do projeto
 - Listagem de restaurantes;
