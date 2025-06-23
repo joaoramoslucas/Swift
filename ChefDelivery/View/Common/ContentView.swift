@@ -22,7 +22,7 @@ struct ContentView: View {
                                 OrderTypeGridView()
                                     .adaptiveTextColor(isDarkMode: isDarkMode)
                                 CarouselTabView()
-                                StoresContainerView()
+                                StoresContainerView(viewModel: StoreViewModel())
                                     .adaptiveTextColor(isDarkMode: isDarkMode)
                             }
                         }
@@ -68,7 +68,7 @@ struct ContentView: View {
                                         showCart = true
                                         isMenuOpen = false
                                     }
-                                        .buttonStyle(MenuButtonStyle(isDarkMode: isDarkMode))
+                                    .buttonStyle(MenuButtonStyle(isDarkMode: isDarkMode))
                                     Divider()
                                     Button("Adicionar Forma de Pagamento") {}
                                         .buttonStyle(MenuButtonStyle(isDarkMode: isDarkMode))
@@ -100,7 +100,7 @@ struct ContentView: View {
                         .animation(.easeInOut, value: isMenuOpen)
                     }
                 } else {
-                    LoginView(isLoggedIn: $isLoggedIn)
+                    LoginView(isLoggedIn: isLoggedIn, isAdmin: false)
                         .navigationBarBackButtonHidden(true)
                         .onAppear {
                             isMenuOpen = false
@@ -108,7 +108,7 @@ struct ContentView: View {
                 }
             }
             .background(
-                NavigationLink(destination: LoginView(isLoggedIn: $isLoggedIn), isActive: $showLogin) {
+                NavigationLink(destination: LoginView(isLoggedIn: isLoggedIn, isAdmin: false), isActive: $showLogin) {
                     EmptyView()
                 }
                 .hidden()
@@ -147,7 +147,9 @@ struct RoundedCorner: Shape {
     var corners: UIRectCorner
     
     func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let path = UIBezierPath(roundedRect: rect,
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
 }

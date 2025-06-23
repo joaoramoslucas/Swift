@@ -5,38 +5,82 @@
 //  Created by Joao Lucas on 29/05/23.
 //
 
-import SwiftUI // Importa o framework SwiftUI para construir a interface do usuário
+import SwiftUI
 
-// Estrutura que representa a visualização do container de lojas
 struct StoresContainerView: View {
-    // Corpo da visualização
+    @ObservedObject var viewModel: StoreViewModel
+
     var body: some View {
-        VStack(alignment: .leading) { // Utiliza um VStack para empilhar elementos verticalmente, alinhando à esquerda
-            Text("Lojas") // Exibe o título da seção
-                .foregroundColor(Color.primary) // Define a fonte como headline
+        VStack(alignment: .leading) {
+            Text("Lojas")
+                .foregroundColor(Color.primary)
+                .font(.headline)
             
-            VStack(alignment: .leading, spacing: 30) { // Outro VStack para empilhar os itens das lojas
-                // Itera sobre os dados de lojas mockados
-                ForEach(storesMock) { mock in
-                    // Cria um link de navegação para a visualização de detalhes da loja
-                    NavigationLink {
-                        StoreDetailView(store: mock) // Redireciona para a StoreDetailView passando a loja selecionada
-                    } label: {
-                        StoreItemView(store: mock) // Exibe a visualização do item da loja
+            VStack(alignment: .leading, spacing: 30) {
+                if viewModel.stores.isEmpty {
+                    Text("Carregando lojas...")
+                        .foregroundColor(.gray)
+                        .padding(.top, 10)
+                } else {
+                    ForEach(viewModel.stores) { store in
+                        NavigationLink {
+                            StoreDetailView(store: store)
+                        } label: {
+                            StoreItemView(store: store)
+                        }
+                        .foregroundColor(Color.primary)
                     }
-                    .foregroundColor(Color.primary)
                 }
             }
         }
-        .padding(.horizontal, 20) // Adiciona preenchimento horizontal ao container
-        .foregroundColor(.black) // Define a cor do texto como preto
+        .padding(.horizontal, 20)
+        .foregroundColor(.black)
+        .onAppear {
+            viewModel.loadStores()
+        }
     }
 }
+let previewStoreViewModel: StoreViewModel = {
+    let viewModel = StoreViewModel()
+    viewModel.stores = [
+        StoreType(
+            id: 1,
+            name: "Pizzaria do João",
+            logoImage: "pizzaria_logo",
+            headerImage: "pizzaria_header",
+            location: "Rua das Pizzas, 123",
+            stars: 5,
+            products: [
+                ProductType(
+                    id: 1,
+                    name: "Pizza Calabresa",
+                    description: "Deliciosa pizza de calabresa.",
+                    image: "pizza_calabresa",
+                    price: 49.99
+                )
+            ]
+        ),
+        StoreType(
+            id: 2,
+            name: "Hamburgueria do Chef",
+            logoImage: "hamburgueria_logo",
+            headerImage: "hamburgueria_header",
+            location: "Av. dos Lanches, 456",
+            stars: 4,
+            products: [
+                ProductType(
+                    id: 2,
+                    name: "Cheeseburger",
+                    description: "Pão, carne, queijo e muito sabor.",
+                    image: "cheeseburger",
+                    price: 24.90
+                )
+            ]
+        )
+    ]
+    return viewModel
+}()
 
-// Estrutura para pré-visualização do StoresContainerView
-struct StoresContainerView_Previews: PreviewProvider {
-    static var previews: some View {
-        StoresContainerView() // Exibe a pré-visualização do container de lojas
-            .previewLayout(.sizeThatFits) // Define o layout da pré-visualização para se ajustar ao conteúdo
-    }
+#Preview {
+    StoresContainerView(viewModel: previewStoreViewModel)
 }

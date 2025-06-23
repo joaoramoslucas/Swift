@@ -16,14 +16,23 @@ struct ChefDeliveryApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     @State private var isLoggedIn: Bool = false
+    @State private var isAdmin: Bool = false
 
     var body: some Scene {
         WindowGroup {
             if isLoggedIn {
-                ContentView()
-                    .environmentObject(CartViewModel())
+                if isAdmin {
+                    // View para administrador logado
+                    StorageHome()
+                        .environmentObject(CartViewModel())
+                } else {
+                    // View para usuário comum logado
+                    ContentView()
+                        .environmentObject(CartViewModel())
+                }
             } else {
-                LoginView(isLoggedIn: $isLoggedIn)
+                // View de login
+                LoginView(isLoggedIn: isLoggedIn, isAdmin: isAdmin)
             }
         }
     }

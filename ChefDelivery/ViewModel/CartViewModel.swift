@@ -33,4 +33,3 @@ class CartViewModel: ObservableObject {
         items.reduce(0) { $0 + $1.subTotal } // Soma todos os subtotais dos itens
     }
 }
-

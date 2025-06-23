@@ -57,7 +57,10 @@
 		C53B69322DE4DD29007229E2 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = C53B69312DE4DD29007229E2 /* FirebaseVertexAI */; };
 		C53B69362DE4E9DA007229E2 /* GoogleService-Info-google.plist in Resources */ = {isa = PBXBuildFile; fileRef = C53B69352DE4E9DA007229E2 /* GoogleService-Info-google.plist */; };
 		C53B693B2DE4EB27007229E2 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53B693A2DE4EB1F007229E2 /* Register.swift */; };
+		C542DDAD2E09BEAC007F9A44 /* StorageHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C542DDA82E09BEAC007F9A44 /* StorageHome.swift */; };
+		C542DDB12E09C277007F9A44 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C542DDB02E09C273007F9A44 /* User.swift */; };
 		C5431C162DE4D592004C6CE2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5431C152DE4D592004C6CE2 /* GoogleService-Info.plist */; };
+		C56C1F852E03466A0064D290 /* StoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56C1F842E0346620064D290 /* StoreViewModel.swift */; };
 		C5FD5F322DE77A6E00A202D9 /* DeliveryInforView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD5F312DE77A5E00A202D9 /* DeliveryInforView.swift */; };
 		C5FD5F342DE77AB900A202D9 /* PaymentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD5F332DE77A9D00A202D9 /* PaymentInfoView.swift */; };
 		C5FD5F362DE77AD200A202D9 /* CreditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD5F352DE77ACC00A202D9 /* CreditCardView.swift */; };
@@ -93,7 +96,10 @@
 		BAA8A172E88C5FB0A5B623BB /* Pods-ChefDelivery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChefDelivery.release.xcconfig"; path = "Target Support Files/Pods-ChefDelivery/Pods-ChefDelivery.release.xcconfig"; sourceTree = "<group>"; };
 		C53B69352DE4E9DA007229E2 /* GoogleService-Info-google.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-google.plist"; sourceTree = "<group>"; };
 		C53B693A2DE4EB1F007229E2 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		C542DDA82E09BEAC007F9A44 /* StorageHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHome.swift; sourceTree = "<group>"; };
+		C542DDB02E09C273007F9A44 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C5431C152DE4D592004C6CE2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C56C1F842E0346620064D290 /* StoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewModel.swift; sourceTree = "<group>"; };
 		C5FD5F312DE77A5E00A202D9 /* DeliveryInforView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryInforView.swift; sourceTree = "<group>"; };
 		C5FD5F332DE77A9D00A202D9 /* PaymentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentInfoView.swift; sourceTree = "<group>"; };
 		C5FD5F352DE77ACC00A202D9 /* CreditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardView.swift; sourceTree = "<group>"; };
@@ -112,6 +118,8 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C53B69372DE4EAD5007229E2 /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C53B69392DE4EADF007229E2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
+		C56C1F6C2E0322830064D290 /* ScreenAdmin */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ScreenAdmin; sourceTree = "<group>"; };
+		C56C1F802E0346170064D290 /* NetWorking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NetWorking; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +201,7 @@
 		1828E78D2A151C6700B8A3C6 /* ChefDelivery */ = {
 			isa = PBXGroup;
 			children = (
+				C56C1F802E0346170064D290 /* NetWorking */,
 				C52F8C572E0096390036B1C8 /* ViewModel */,
 				C52F8C502E00948A0036B1C8 /* View */,
 				C53B69372DE4EAD5007229E2 /* Service */,
@@ -224,6 +233,7 @@
 		1828E7B12A15586000B8A3C6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C542DDB02E09C273007F9A44 /* User.swift */,
 				C52F8C582E0096AD0036B1C8 /* Mock */,
 				1828E7B22A15589100B8A3C6 /* OrderType.swift */,
 				48A230C12A2BFC1200431A41 /* StoreType.swift */,
@@ -261,6 +271,7 @@
 		C52F8C502E00948A0036B1C8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C56C1F6C2E0322830064D290 /* ScreenAdmin */,
 				C52F8C562E0095B70036B1C8 /* OrderType */,
 				C52F8C552E0095860036B1C8 /* Checkout */,
 				C52F8C542E00956D0036B1C8 /* Cart */,
@@ -321,8 +332,10 @@
 		C52F8C572E0096390036B1C8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C56C1F842E0346620064D290 /* StoreViewModel.swift */,
 				C5FD5F372DE78C3800A202D9 /* CheckoutViewModel.swift */,
 				31C14ED72C5AC4CB000ECDDE /* CartViewModel.swift */,
+				C542DDA82E09BEAC007F9A44 /* StorageHome.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -361,6 +374,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				C53B69372DE4EAD5007229E2 /* Service */,
+				C56C1F6C2E0322830064D290 /* ScreenAdmin */,
+				C56C1F802E0346170064D290 /* NetWorking */,
 			);
 			name = ChefDelivery;
 			productName = ChefDelivery;
@@ -473,6 +488,7 @@
 				C5FD5F342DE77AB900A202D9 /* PaymentInfoView.swift in Sources */,
 				C5FD5F322DE77A6E00A202D9 /* DeliveryInforView.swift in Sources */,
 				C5FD5F382DE78C3C00A202D9 /* CheckoutViewModel.swift in Sources */,
+				C542DDAD2E09BEAC007F9A44 /* StorageHome.swift in Sources */,
 				180B33692A16635500C1AFBC /* CarouselItemView.swift in Sources */,
 				1828E7912A151C6700B8A3C6 /* ContentView.swift in Sources */,
 				3175A0352C2C7ACE00AD4886 /* Double+.swift in Sources */,
@@ -483,12 +499,14 @@
 				C53B693B2DE4EB27007229E2 /* Register.swift in Sources */,
 				48A230C02A2BFAF300431A41 /* StoreDetailView.swift in Sources */,
 				31A6E7692C41DB490077BF1B /* LoginView.swift in Sources */,
+				C542DDB12E09C277007F9A44 /* User.swift in Sources */,
 				1828E7A62A15451F00B8A3C6 /* OrderTypeGridView.swift in Sources */,
 				1828E78F2A151C6700B8A3C6 /* ChefDeliveryApp.swift in Sources */,
 				1828E7A32A15264A00B8A3C6 /* NavigationBar.swift in Sources */,
 				31C14EDC2C5AC589000ECDDE /* CheckoutView.swift in Sources */,
 				31C14EDA2C5AC547000ECDDE /* CartItemRow.swift in Sources */,
 				48A230C22A2BFC1200431A41 /* StoreType.swift in Sources */,
+				C56C1F852E03466A0064D290 /* StoreViewModel.swift in Sources */,
 				180B336F2A166A3200C1AFBC /* CarouselTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
