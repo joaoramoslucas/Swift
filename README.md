@@ -15,8 +15,6 @@ https://github.com/user-attachments/assets/74d8ef45-3067-4a02-90ba-91918dd4fc24
 - Implementação de um menu de filtragem para selecionar a quantidade de estrelas desejada;
 
 ## ✔️ Técnicas e tecnologias
-
-**Veja abaixo o que utilizamos nesse projeto**:
 - CRUD - Nodejs
 - Mocks - Feitos em configuraçoes View Code.
 - `@State`: Propriedade utilizada para gerenciar o estado dinâmico dos dados dentro das views;
