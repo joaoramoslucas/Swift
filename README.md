@@ -20,9 +20,9 @@ https://github.com/user-attachments/assets/74d8ef45-3067-4a02-90ba-91918dd4fc24
 - `@State`: Propriedade utilizada para gerenciar o estado dinâmico dos dados dentro das views;
 - Swift: Linguagem de programação poderosa e intuitiva usada para desenvolver aplicativos iOS;
 - `Menu`: Recurso do SwiftUI que permite criar menus interativos para ações específicas dentro do aplicativo;
+- `NavigationView`: Componente do SwiftUI utilizado para criar a navegação entre diferentes telas do aplicativo;
 - XCode: Ambiente de desenvolvimento integrado (IDE) oficial da Apple para desenvolvimento de aplicativos iOS;
 - SwiftUI: Framework moderno e declarativo da Apple para a criação de interfaces de usuário em aplicativos iOS;
-- `NavigationView`: Componente do SwiftUI utilizado para criar a navegação entre diferentes telas do aplicativo;
 - `NavigationLink`: Recurso do SwiftUI utilizado para criar links de navegação entre telas, permitindo a transição entre diferentes partes do aplicativo;
 - `@Binding`: Recurso poderoso do SwiftUI que permite estabelecer uma comunicação bidirecional entre views, garantindo a sincronização e atualização automática de dados compartilhados. 
 
