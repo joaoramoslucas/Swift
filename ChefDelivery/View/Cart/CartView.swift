@@ -5,75 +5,62 @@
 //
 import SwiftUI
 
-// Estrutura que representa a tela do carrinho de compras
 struct CartView: View {
-    @EnvironmentObject var cartViewModel: CartViewModel // Acesso ao modelo de dados do carrinho
-    @Environment(\.presentationMode) var presentationMode // Controla a apresentação da tela (fechar)
+    @EnvironmentObject var cartViewModel: CartViewModel
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationView { // Cria uma nova visualização de navegação
-            VStack { // Organiza os elementos da tela verticalmente
-                List { // Inicia uma lista para exibir os itens do carrinho
+        NavigationView {
+            VStack {
+                List {
                     ForEach(cartViewModel.items.indices, id: \.self) { index in
-                        CartItemRow(cartItem: self.cartViewModel.items[index]) // Exibe cada item do carrinho em uma linha
+                        CartItemRow(cartItem: self.cartViewModel.items[index])
                     }
-                    .onDelete(perform: deleteItem) // Permite que os usuários removam itens deslizando
+                    .onDelete(perform: deleteItem)
                 }
-                .listStyle(PlainListStyle()) // Define o estilo da lista como simples
+                .listStyle(PlainListStyle())
 
-                Spacer() // Espaço flexível para empurrar os elementos para cima
+                Spacer()
 
-                // Exibe o total do carrinho formatado
                 Text(String(format: "Total: R$%.2f", self.cartViewModel.totalPrice))
-                    .font(.title) // Define o tamanho da fonte como título
-                    .padding() // Adiciona espaçamento ao redor do texto
+                    .font(.title)
+                    .padding()
 
-                HStack { // Organiza os botões horizontalmente
-                    // Botão para limpar o carrinho
+                HStack {
                     Button(action: {
-                        self.cartViewModel.removeAll() // Limpa todos os itens do carrinho
+                        self.cartViewModel.removeAll()
                     }) {
-                        Text("Limpar Carrinho") // Texto do botão
-                            .padding() // Adiciona espaçamento interno ao botão
-                            .background(Color.red) // Define a cor de fundo como vermelha
-                            .foregroundColor(.white) // Define a cor do texto como branca
-                            .cornerRadius(10) // Arredonda os cantos do botão
+                        Text("Limpar Carrinho")
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                    // Botão para finalizar o pedido que navega para CheckoutView
                     NavigationLink(destination: CheckoutView()) {
-                        Text("Finalizar Pedido") // Texto do botão
-                            .padding() // Adiciona espaçamento interno ao botão
-                            .background(Color.green) // Define a cor de fundo como verde
-                            .foregroundColor(.white) // Define a cor do texto como branca
-                            .cornerRadius(10) // Arredonda os cantos do botão
+                        Text("Finalizar Pedido")
+                            .padding()
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
                 }
-                .padding() // Adiciona espaçamento ao redor do HStack
-                .frame(maxWidth: .infinity, alignment: .center) // Centraliza o HStack horizontalmente
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .center)
             }
-            .navigationBarItems(trailing: // Itens da barra de navegação à direita
+            .navigationBarItems(trailing:
                 Button(action: {
-                    self.presentationMode.wrappedValue.dismiss() // Fecha a tela do carrinho
+                    self.presentationMode.wrappedValue.dismiss()
                 }) {
-                    Image(systemName: "xmark") // Ícone "x" para fechar a tela
-                        .foregroundColor(Color.primary) // Define a cor do ícone como preto
+                    Image(systemName: "xmark")
+                        .foregroundColor(Color.primary)
                 }
             )
-            .padding(.bottom, 20) // Ajusta a margem inferior da tela
+            .padding(.bottom, 20)
         }
     }
-    // Função para deletar um item da lista
     private func deleteItem(at offsets: IndexSet) {
         offsets.forEach { index in
-            self.cartViewModel.removeItem(at: index) // Remove o item do carrinho
+            self.cartViewModel.removeItem(at: index)
         }
-    }
-}
-// PreviewProvider para visualizar a tela no Xcode
-struct CartView_Previews: PreviewProvider {
-    static var previews: some View {
-        let cartViewModel = CartViewModel()
-        return CartView()
-            .environmentObject(cartViewModel)
     }
 }

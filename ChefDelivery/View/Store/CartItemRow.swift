@@ -1,42 +1,50 @@
 //
-//  CartItemRow.swift
+//  StoreHeaderSession.swift
 //  ChefDelivery
 //
-//  Created by Jao on 31/07/24.
+//  Created by Joao Lucas on 03/07/25.
 //
 import SwiftUI
 
-// Estrutura que representa uma linha de item do carrinho
 struct CartItemRow: View {
-    let cartItem: CartItem // Recebe um item do carrinho para exibir
+    let cartItem: CartItem
 
     var body: some View {
-        HStack(spacing: 10) { // Organiza os elementos da linha horizontalmente
-            // Exibe a imagem do produto
-            Image(cartItem.product.image)
-                .resizable() // Permite que a imagem seja redimensionada
-                .scaledToFit() // Mantém a proporção da imagem
-                .cornerRadius(10)
-                .frame(width: 120, height: 120) // Define a largura e altura da imagem
+        HStack(spacing: 10) {
+            if let productImageName = cartItem.product.image {
+                Image(productImageName)
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+                    .frame(width: 120, height: 120)
+            } else {
+                Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+                    .frame(width: 120, height: 120)
+                    .foregroundColor(.gray)
+            }
 
-            VStack(alignment: .leading) { // Organiza os textos verticalmente
-                Text(cartItem.product.name) // Nome do produto
-                    .font(.headline) // Define o estilo da fonte como título
+            VStack(alignment: .leading) {
+                Text(cartItem.product.name).font(.headline)
+                Text(cartItem.product.description).foregroundColor(.gray)
 
-                Text(cartItem.product.description) // Descrição do produto
-                    .foregroundColor(.gray) // Define a cor do texto como cinza
-
-                HStack { // Organiza informações de preço e quantidade
-                    Text(cartItem.product.formatPrice) // Exibe o preço do produto
-                        .font(.subheadline) // Define o estilo da fonte como subtítulo
-
-                    Spacer() // Espaço flexível entre preço e quantidade
-
-                    Text("Quantidade: \(cartItem.quantity)") // Exibe a quantidade do produto
-                        .font(.subheadline) // Define o estilo da fonte como subtítulo
+                HStack {
+                    if let price = cartItem.product.price {
+                        Text(price.formatted(.currency(code: "BRL")))
+                            .font(.subheadline)
+                    } else {
+                        Text("Preço não disponível")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                    
+                    Spacer()
+                    Text("Quant: \(cartItem.quantity)").font(.subheadline)
                 }
             }
         }
-        .padding(.vertical, 8) // Adiciona espaçamento vertical à linha
+        .padding(.vertical, 8)
     }
 }

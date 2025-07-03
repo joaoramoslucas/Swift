@@ -19,12 +19,9 @@ struct PaymentInfoView: View {
             Spacer()
 
             ZStack {
-                // Frente do cartão
                 cardFront
                     .opacity(isFlipped ? 0.0 : 1.0)
                     .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x:0, y:1, z:0))
-
-                // Verso do cartão (CVV)
                 cardBack
                     .opacity(isFlipped ? 1.0 : 0.0)
                     .rotation3DEffect(.degrees(isFlipped ? 0 : -180), axis: (x:0, y:1, z:0))
@@ -36,16 +33,11 @@ struct PaymentInfoView: View {
                     isFlipped = (newField == .cvv)
                 }
             }
-
-            // Campos de texto
             formFields
                 .padding(.horizontal)
-
-            // Botão Salvar Cartão
             Button(action: {
                 saveCard.toggle()
-                // Aqui você pode adicionar sua lógica de salvar o cartão, ex:
-                // checkoutViewModel.saveCard()
+                 checkoutViewModel.saveCard()
             }) {
                 HStack {
                     Image(systemName: saveCard ? "checkmark.circle.fill" : "creditcard")
@@ -83,7 +75,6 @@ struct PaymentInfoView: View {
         .navigationBarBackButtonHidden(true)
     }
 
-    // MARK: - Cartão frente
     private var cardFront: some View {
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 20)
@@ -130,7 +121,6 @@ struct PaymentInfoView: View {
         }
     }
     
-    // MARK: - Cartão verso
     private var cardBack: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
@@ -171,7 +161,6 @@ struct PaymentInfoView: View {
         }
     }
     
-    // MARK: - Campos de formulário
     private var formFields: some View {
         VStack(spacing: 16) {
             TextField("Nome no cartão", text: Binding(
@@ -207,7 +196,6 @@ struct PaymentInfoView: View {
         }
     }
 
-    // MARK: - Formata o número do cartão (ex: 1234 5678 9012 3456)
     private var formattedCardNumber: String {
         let trimmed = checkoutViewModel.cardNumber.filter { $0.isNumber }
         var result = ""

@@ -24,7 +24,6 @@ struct CreditCardView: View {
                 .shadow(radius: 5)
 
             if isBackVisible {
-                // Verso do cartão
                 VStack(alignment: .leading, spacing: 16) {
                     Rectangle()
                         .fill(Color.black.opacity(0.8))
@@ -46,7 +45,6 @@ struct CreditCardView: View {
                 }
                 .padding()
             } else {
-                // Frente do cartão
                 VStack(alignment: .leading, spacing: 16) {
                     Text("ChefDelivery Card")
                         .font(.headline)
@@ -87,30 +85,3 @@ struct CreditCardView: View {
         }.joined(separator: " ")
     }
 }
-
-
-#Preview {
-    VStack(spacing: 40) {
-        CreditCardView(
-            number: "1234 5678 9012 3456",
-            name: "João Lucas",
-            expiration: "12/25",
-            cvv: "123",
-            isBackVisible: false // frente
-        )
-        .frame(height: 200)
-        .padding()
-
-        CreditCardView(
-            number: "1234 5678 9012 3456",
-            name: "João Lucas",
-            expiration: "12/25",
-            cvv: "123",
-            isBackVisible: true // verso
-        )
-        .frame(height: 200)
-        .padding()
-    }
-}
-
-

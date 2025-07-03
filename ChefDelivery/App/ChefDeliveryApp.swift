@@ -22,17 +22,14 @@ struct ChefDeliveryApp: App {
         WindowGroup {
             if isLoggedIn {
                 if isAdmin {
-                    // View para administrador logado
                     StorageHome()
                         .environmentObject(CartViewModel())
                 } else {
-                    // View para usuário comum logado
-                    ContentView()
+                    ContentView(isLoggedIn: $isLoggedIn, isAdmin: $isAdmin)
                         .environmentObject(CartViewModel())
                 }
             } else {
-                // View de login
-                LoginView(isLoggedIn: isLoggedIn, isAdmin: isAdmin)
+                LoginView(isLoggedIn: $isLoggedIn, isAdmin: $isAdmin)
             }
         }
     }

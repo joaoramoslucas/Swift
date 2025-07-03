@@ -4,40 +4,34 @@
 //
 //  Created by Joao Lucas on 18/06/25.
 //
-
 import Foundation
+import Alamofire
+
 
 class StoreViewModel: ObservableObject {
-    @Published var stores: [StoreType] = []
     
-    func loadStores() {
-        guard let url = URL(string: "https://seu-servidor.com/api/stores") else {
-            print("URL inválida")
-            return
-        }
+    @Published var stores: [AllStoresTypes] = []
+    @Published var products: [ProductType] = []
+    
+    func getAllStores () {
         
-        let request = URLRequest(url: url)
+        print("AQQQQQQQQQQQQ")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Erro na requisição: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let data = data else {
-                print("Nenhum dado retornado")
-                return
-            }
-            
-            do {
-                let stores = try JSONDecoder().decode([StoreType].self, from: data)
+        APIService.shared.get("/store/get_all_stores", responseType: [AllStoresTypes].self){ response in
+            switch response{
+            case .success(let data):
+                print("Requisicao feita com sucesso ✅")
                 DispatchQueue.main.async {
-                    self.stores = stores
+                    self.stores = data
                 }
-            } catch {
-                print("Erro na decodificação: \(error)")
+            case .failure(let err):
+                print("Erro ao buscar lojas: \(err)")
+                DispatchQueue.main.async {
+                    self.stores = []
+                }
+                
             }
-        }.resume()
+        }
     }
 }
 

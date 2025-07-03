@@ -4,31 +4,27 @@
 //
 //  Created by Joao Lucas on 03/06/23.
 //
+import Foundation
 
-import Foundation // Importa o framework Foundation para funcionalidades básicas
-
-// Estrutura que representa um produto, conformando-se ao protocolo Identifiable
 struct ProductType: Identifiable, Decodable {
-    let id: Int // Identificador único do produto
-    let name: String // Nome do produto
-    let description: String // Descrição do produto
-    let image: String // Nome da imagem do produto
-    let price: Double // Preço do produto
+    let id: Int
+    let name: String
+    let description: String
+    let image: String?
+    let price: Double?
     
-    // Computed property que formata o preço para exibição, adicionando o prefixo "R$"
-    var formatPrice: String {
-        return "R$" + price.FormatPrice() // Chama o método FormatPrice da extensão Double
-    }
+    enum CodingKeys: String, CodingKey {
+            case id, name, description, price
+            case image = "image_url"
+        }
 }
 
-// Estrutura que representa um item no carrinho
 struct CartItem {
-    let product: ProductType // Produto associado ao item do carrinho
-    var quantity: Int // Quantidade do produto no carrinho
+    let product: ProductType
+    var quantity: Int
     
-    // Computed property que calcula o subtotal com base na quantidade e no preço do produto
     var subTotal: Double {
-        return Double(quantity) * product.price // Multiplica a quantidade pelo preço do produto
-    }
+           return Double(quantity) * (product.price ?? 0.0)
+       }
 }
 

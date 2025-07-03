@@ -9,17 +9,13 @@ class CheckoutViewModel: ObservableObject {
     @Published var address: String = ""
     @Published var isOrderConfirmed: Bool = false
     
-    // NOVO: Estado para controlar se o cartão está salvo
     @Published var isCardSaved: Bool = false
     
-    // NOVO: Chave para armazenamento simples no UserDefaults
     private let cardStorageKey = "savedCardInfo"
 
     func updateName(_ newValue: String) {
         var filtered = newValue.filter { $0.isLetter || $0.isWhitespace || $0 == "-" || $0 == "'" }
-        if filtered.count > 30 {
-            filtered = String(filtered.prefix(30))
-        }
+        if filtered.count > 30 { filtered = String(filtered.prefix(30)) }
         name = filtered
     }
 
@@ -32,9 +28,7 @@ class CheckoutViewModel: ObservableObject {
         let filtered = newValue.filter { $0.isNumber }
         var result = ""
         for (index, char) in filtered.prefix(4).enumerated() {
-            if index == 2 {
-                result += "/"
-            }
+            if index == 2 { result += "/" }
             result.append(char)
         }
         expirationDate = result
@@ -53,7 +47,6 @@ class CheckoutViewModel: ObservableObject {
         isOrderConfirmed = true
     }
     
-    // NOVO: Função para salvar os dados do cartão no UserDefaults
     func saveCard() {
         let cardInfo: [String: String] = [
             "name": name,
@@ -61,23 +54,18 @@ class CheckoutViewModel: ObservableObject {
             "expirationDate": expirationDate,
             "cvv": cvv
         ]
-        
         if let data = try? JSONSerialization.data(withJSONObject: cardInfo, options: []) {
             UserDefaults.standard.set(data, forKey: cardStorageKey)
             isCardSaved = true
         }
     }
     
-    // NOVO: Carregar cartão salvo (se existir)
     func loadSavedCard() {
         guard let data = UserDefaults.standard.data(forKey: cardStorageKey),
               let cardInfo = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
         else { return }
-        
-        name = cardInfo["name"] ?? ""
-        cardNumber = cardInfo["cardNumber"] ?? ""
-        expirationDate = cardInfo["expirationDate"] ?? ""
-        cvv = cardInfo["cvv"] ?? ""
+        name = cardInfo["name"] ?? ""; cardNumber = cardInfo["cardNumber"] ?? ""
+        expirationDate = cardInfo["expirationDate"] ?? ""; cvv = cardInfo["cvv"] ?? ""
         isCardSaved = true
     }
 }
