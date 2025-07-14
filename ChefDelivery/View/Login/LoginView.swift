@@ -20,7 +20,7 @@ struct LoginView: View {
                 
                 VStack {
                     Spacer()
-                    Image("")
+                    Image("logoLogin")
                         .resizable().frame(width: 350, height: 350).padding(.bottom, 50)
                     
                     VStack(spacing: 20) {

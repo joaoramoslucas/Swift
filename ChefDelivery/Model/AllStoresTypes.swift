@@ -8,16 +8,19 @@ import Foundation
 
 struct AllStoresTypes: Identifiable, Decodable {
     let id: Int
+    let cnpj: String
     let name: String
     let logoImage: String?
+    let administratorId: String?
     let headerImage: String?
     let location: String
-    let products: [ProductType]
+    let products: [ProductType]?
     let stars: Int?
     
     enum CodingKeys: String, CodingKey {
-            case id, name, location, products, stars
+            case id, name, location, products, stars, cnpj
             case logoImage
             case headerImage
+            case administratorId = "AdministradorId"
         }
 }

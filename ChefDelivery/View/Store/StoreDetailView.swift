@@ -23,13 +23,15 @@ struct StoreDetailView: View {
                     .padding(.horizontal)
                     .padding(.bottom, 5)
 
-                ForEach(store.products, id: \.id) { product in
-                    NavigationLink {
-                        ProductDetailView(product: product)
-                    } label: {
-                        // Nova Subview para o item do produto
-                        ProductListItemView(product: product)
-                            .foregroundColor(.primary) // Garante cor do texto do link
+                if let products = store.products {
+                    ForEach(products, id: \.id) { product in
+                        NavigationLink {
+                            ProductDetailView(product: product)
+                        } label: {
+                            // Nova Subview para o item do produto
+                            ProductListItemView(product: product)
+                                .foregroundColor(.primary) // Garante cor do texto do link
+                        }
                     }
                 }
             }
