@@ -25,7 +25,7 @@ struct ChefDeliveryApp: App {
                     StorageHome()
                         .environmentObject(CartViewModel())
                 } else {
-                    ContentView(isLoggedIn: $isLoggedIn, isAdmin: $isAdmin)
+                    ContentView(isLoggedIn: isLoggedIn, isAdmin: isAdmin)
                         .environmentObject(CartViewModel())
                 }
             } else {

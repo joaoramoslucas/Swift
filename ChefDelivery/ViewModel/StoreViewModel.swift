@@ -14,9 +14,6 @@ class StoreViewModel: ObservableObject {
     @Published var products: [ProductType] = []
     
     func getAllStores () {
-        
-        print("AQQQQQQQQQQQQ")
-        
         APIService.shared.get("/store/get_all_stores", responseType: [AllStoresTypes].self){ response in
             switch response{
             case .success(let data):

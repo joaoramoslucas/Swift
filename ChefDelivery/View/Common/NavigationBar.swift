@@ -7,14 +7,16 @@ struct NavigationBar: View {
             Text("Chef Delivery")
             .font(.title)
             .bold()
-            .foregroundColor(Color.primary)
+            .foregroundColor(.red)
             
             Spacer()
 
-            Button(action: { /* dasdasd */ }) {
+            Button(action: {
+                /* dasdasd */
+            }) {
                 Image(systemName: "bell.badge")
                     .font(.title3)
-                    .foregroundColor(.orange)
+                    .foregroundColor(.red)
             }
         }
     }

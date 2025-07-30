@@ -11,9 +11,12 @@ struct StoresContainerView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Lojas").foregroundColor(Color.primary).font(.headline)
+            Text("Lojas")
+                .foregroundColor(.red)
+                .font(.headline)
+                .frame(maxWidth: .infinity, alignment: .center)
             
-            VStack(alignment: .leading, spacing: 30) {
+            VStack(alignment: .leading, spacing: 7) {
                 if viewModel.stores.isEmpty {
                     Text("Carregando lojas...").foregroundColor(.gray).padding(.top, 10)
                 } else {
@@ -22,17 +25,19 @@ struct StoresContainerView: View {
                             StoreDetailView(store: store)
                         } label: {
                             StoreItemView(store: store)
+                                .foregroundColor(.primary)  
                         }
-                        .foregroundColor(Color.primary)
                     }
                 }
             }
         }
         .padding(.horizontal, 20)
-        .foregroundColor(.black)
         .onAppear {
             viewModel.getAllStores()
         }
     }
 }
 
+#Preview {
+    StoresContainerView(viewModel: StoreViewModel())
+}

@@ -7,6 +7,9 @@
 import SwiftUI
 
 struct StoreItemView: View {
+    
+    @Environment(\.colorScheme) var colorScheme
+    
     var store: AllStoresTypes
     
     var body: some View {
@@ -28,13 +31,12 @@ struct StoreItemView: View {
             
             VStack(alignment: .leading) {
                 Text(store.name).font(.headline)
-                Text(store.location).font(.subheadline).foregroundColor(.gray)
+                Text(store.location).font(.subheadline)
             }
             Spacer()
         }
         .padding(.vertical, 8)
-        .background(Color.white)
+        .background(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
         .cornerRadius(10)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }

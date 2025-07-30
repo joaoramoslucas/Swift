@@ -12,7 +12,7 @@ struct StoreDetailView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
-                StoreHeaderSection(store: store) // Nova Subview
+                StoreHeaderSection(store: store)
                 
                 Divider()
                     .padding(.horizontal)
@@ -21,16 +21,14 @@ struct StoreDetailView: View {
                 Text("Produtos")
                     .font(.headline)
                     .padding(.horizontal)
-                    .padding(.bottom, 5)
 
                 if let products = store.products {
                     ForEach(products, id: \.id) { product in
                         NavigationLink {
                             ProductDetailView(product: product)
                         } label: {
-                            // Nova Subview para o item do produto
                             ProductListItemView(product: product)
-                                .foregroundColor(.primary) // Garante cor do texto do link
+                                .foregroundColor(.primary)
                         }
                     }
                 }

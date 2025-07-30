@@ -7,7 +7,7 @@ struct PaymentInfoView: View {
     @State private var saveCard: Bool = false
     @State private var isFlipped = false
     @Environment(\.dismiss) var dismiss
-    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var cartViewModel: CartViewModel
  
     
     enum Field {
@@ -66,13 +66,10 @@ struct PaymentInfoView: View {
         }
         .alert("Pedido Confirmado", isPresented: $checkoutViewModel.isOrderConfirmed) {
             Button("OK", role: .cancel) {
-                dismiss()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-                    dismiss()
-                })
+                cartViewModel.removeAll()
+                path = NavigationPath()
             }
         }
-        .navigationBarBackButtonHidden(true)
     }
 
     private var cardFront: some View {
