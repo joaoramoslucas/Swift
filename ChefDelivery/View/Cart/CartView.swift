@@ -70,6 +70,9 @@ struct CartView: View {
                     }
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: .orderCompleted)) { _ in
+                dismiss()
+            }
         }
     }
 

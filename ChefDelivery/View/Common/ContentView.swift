@@ -30,6 +30,9 @@ struct ContentView: View {
         .sheet(isPresented: $showCreateStore) {
             CreateStoreView()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .orderCompleted)) { _ in
+            showCart = false
+        }
     }
 
     private var mainContent: some View {
@@ -87,7 +90,8 @@ struct ContentView: View {
                             }
                             Spacer()
                             menuItem(icon: "rectangle.portrait.and.arrow.right", title: "Sair", color: .red) {
-                                isLoggedIn = false; isMenuOpen = false
+                                isMenuOpen = false
+                                NotificationCenter.default.post(name: .userDidLogout, object: nil)
                             }
                         }
                         .padding(.top, 16)

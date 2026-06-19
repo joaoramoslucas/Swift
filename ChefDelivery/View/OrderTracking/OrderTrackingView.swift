@@ -50,26 +50,19 @@ struct OrderTrackingView: View {
     let paymentMethod: PaymentMethod
     let deliveryAddress: String
 
+    @State private var showRating: Bool = false
+    @State private var selectedRating: Int = 0
+
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 28) {
-                    // Animated Header
                     orderStatusHeader
-
-                    // Live Tracking Progress
                     trackingTimeline
-
-                    // Order Info Card
                     orderInfoCard
-
-                    // Delivery Map Placeholder
                     deliveryMapPlaceholder
 
-                    // Help Button
-                    Button {
-                        // Help action
-                    } label: {
+                    Button {} label: {
                         HStack(spacing: 8) {
                             Image(systemName: "questionmark.circle")
                             Text("Precisa de ajuda?")
@@ -88,10 +81,12 @@ struct OrderTrackingView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { dismiss() } label: {
-                        Text("Fechar")
-                            .font(.subheadline)
-                            .foregroundColor(.orange)
+                    if viewModel.currentStatus == .delivered {
+                        Button { dismiss() } label: {
+                            Text("Fechar")
+                                .font(.subheadline)
+                                .foregroundColor(.orange)
+                        }
                     }
                 }
             }
@@ -99,26 +94,44 @@ struct OrderTrackingView: View {
         .onAppear {
             viewModel.startTracking()
         }
-        .interactiveDismissDisabled(viewModel.currentStatus != .delivered)
+        .interactiveDismissDisabled(true)
+        .onChange(of: viewModel.currentStatus) { status in
+            if status == .delivered {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    showRating = true
+                }
+            }
+        }
+        .sheet(isPresented: $showRating) {
+            RatingView(selectedRating: $selectedRating) {
+                showRating = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    NotificationCenter.default.post(name: .orderCompleted, object: nil)
+                    dismiss()
+                }
+            }
+            .presentationDetents([.medium])
+            .interactiveDismissDisabled(true)
+        }
     }
 
     // MARK: - Status Header
     private var orderStatusHeader: some View {
         VStack(spacing: 16) {
-            // Animated Icon
             ZStack {
                 Circle()
-                    .fill(Color.orange.opacity(0.1))
-                    .frame(width: 100, height: 100)
-                    .scaleEffect(viewModel.pulseAnimation ? 1.1 : 1.0)
-                    .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: viewModel.pulseAnimation)
-
-                Circle()
-                    .fill(Color.orange.opacity(0.2))
-                    .frame(width: 76, height: 76)
+                    .fill(Color.orange.opacity(0.12))
+                    .frame(width: 90, height: 90)
+                    .scaleEffect(viewModel.isPulsing ? 1.08 : 1.0)
+                    .animation(
+                        viewModel.isPulsing
+                            ? .easeInOut(duration: 1.5).repeatForever(autoreverses: true)
+                            : .default,
+                        value: viewModel.isPulsing
+                    )
 
                 Image(systemName: viewModel.currentStatus.icon)
-                    .font(.system(size: 32))
+                    .font(.system(size: 36))
                     .foregroundColor(.orange)
             }
 
@@ -133,7 +146,6 @@ struct OrderTrackingView: View {
                     .multilineTextAlignment(.center)
             }
 
-            // ETA
             if viewModel.currentStatus != .delivered {
                 HStack(spacing: 6) {
                     Image(systemName: "clock.fill")
@@ -156,7 +168,6 @@ struct OrderTrackingView: View {
         VStack(spacing: 0) {
             ForEach(OrderStatus.allCases, id: \.rawValue) { status in
                 HStack(alignment: .top, spacing: 16) {
-                    // Timeline indicator
                     VStack(spacing: 0) {
                         Circle()
                             .fill(status.rawValue <= viewModel.currentStatus.rawValue ? Color.orange : Color.gray.opacity(0.3))
@@ -175,7 +186,6 @@ struct OrderTrackingView: View {
                         }
                     }
 
-                    // Content
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text(status.title)
@@ -277,13 +287,83 @@ struct OrderTrackingView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                    .transition(.opacity)
                 } else {
                     Text("Mapa de acompanhamento")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
             }
+        }
+    }
+}
+
+// MARK: - Rating View
+struct RatingView: View {
+    @Binding var selectedRating: Int
+    let onConfirm: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            VStack(spacing: 8) {
+                Image(systemName: "star.bubble.fill")
+                    .font(.system(size: 44))
+                    .foregroundColor(.orange)
+
+                Text("Como foi sua experiência?")
+                    .font(.title3)
+                    .fontWeight(.bold)
+
+                Text("Avalie a loja para ajudar outros clientes")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.top, 20)
+
+            // Stars
+            HStack(spacing: 12) {
+                ForEach(1...5, id: \.self) { star in
+                    Image(systemName: star <= selectedRating ? "star.fill" : "star")
+                        .font(.system(size: 36))
+                        .foregroundColor(star <= selectedRating ? .orange : .gray.opacity(0.3))
+                        .onTapGesture {
+                            withAnimation(.spring(response: 0.3)) {
+                                selectedRating = star
+                            }
+                        }
+                }
+            }
+
+            if selectedRating > 0 {
+                Text(ratingText)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+
+            Button(action: onConfirm) {
+                Text(selectedRating > 0 ? "Enviar Avaliação" : "Pular")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+                    .padding(16)
+                    .background(selectedRating > 0 ? Color.orange : Color(.secondarySystemBackground))
+                    .foregroundColor(selectedRating > 0 ? .white : .primary)
+                    .cornerRadius(14)
+            }
+            .padding(.bottom, 10)
+        }
+        .padding(.horizontal, 24)
+    }
+
+    private var ratingText: String {
+        switch selectedRating {
+        case 1: return "Péssimo 😞"
+        case 2: return "Ruim 😕"
+        case 3: return "Regular 😐"
+        case 4: return "Bom 😊"
+        case 5: return "Excelente! 🤩"
+        default: return ""
         }
     }
 }

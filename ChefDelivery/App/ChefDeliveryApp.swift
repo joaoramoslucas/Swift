@@ -1,5 +1,6 @@
 import SwiftUI
 import FirebaseCore
+import FirebaseAuth
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
@@ -15,8 +16,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct ChefDeliveryApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var cartViewModel = CartViewModel()
-    @State private var isLoggedIn: Bool = false
-    @State private var isAdmin: Bool = false
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
+    @AppStorage("isAdmin") private var isAdmin: Bool = false
 
     var body: some Scene {
         WindowGroup {
@@ -27,12 +28,21 @@ struct ChefDeliveryApp: App {
                     }
                     .environmentObject(cartViewModel)
                 } else {
-                    ContentView(isLoggedIn: isLoggedIn, isAdmin: isAdmin)
+                    ContentView(isLoggedIn: true, isAdmin: false)
                         .environmentObject(cartViewModel)
+                        .onReceive(NotificationCenter.default.publisher(for: .userDidLogout)) { _ in
+                            isLoggedIn = false
+                            isAdmin = false
+                        }
                 }
             } else {
                 LoginView(isLoggedIn: $isLoggedIn, isAdmin: $isAdmin)
             }
         }
     }
+}
+
+extension Notification.Name {
+    static let userDidLogout = Notification.Name("userDidLogout")
+    static let orderCompleted = Notification.Name("orderCompleted")
 }
