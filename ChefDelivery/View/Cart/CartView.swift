@@ -12,7 +12,11 @@ struct CartView: View {
                 } else {
                     List {
                         ForEach(cartViewModel.items.indices, id: \.self) { index in
-                            CartItemRow(cartItem: cartViewModel.items[index])
+                            CartItemRow(
+                                cartItem: cartViewModel.items[index],
+                                onIncrease: { cartViewModel.increaseQuantity(at: index) },
+                                onDecrease: { cartViewModel.decreaseQuantity(at: index) }
+                            )
                         }
                         .onDelete(perform: deleteItem)
                     }
@@ -69,9 +73,6 @@ struct CartView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-            }
-            .onReceive(NotificationCenter.default.publisher(for: .orderCompleted)) { _ in
-                dismiss()
             }
         }
     }

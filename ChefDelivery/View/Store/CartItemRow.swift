@@ -2,6 +2,8 @@ import SwiftUI
 
 struct CartItemRow: View {
     let cartItem: CartItem
+    let onIncrease: () -> Void
+    let onDecrease: () -> Void
 
     var body: some View {
         HStack(spacing: 12) {
@@ -13,34 +15,47 @@ struct CartItemRow: View {
                 cornerRadius: 10
             )
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(cartItem.product.name)
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .lineLimit(1)
 
-                Text(cartItem.product.description)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
-
-                HStack {
-                    if let price = cartItem.product.price {
-                        Text(price, format: .currency(code: "BRL"))
-                            .font(.caption)
-                            .foregroundColor(.green)
-                    }
-                    Spacer()
-                    Text("x\(cartItem.quantity)")
+                if let price = cartItem.product.price {
+                    Text(price, format: .currency(code: "BRL"))
                         .font(.caption)
+                        .foregroundColor(.green)
+                }
+
+                // Quantity Controls
+                HStack(spacing: 14) {
+                    Button(action: onDecrease) {
+                        Image(systemName: "minus.circle.fill")
+                            .font(.title3)
+                            .foregroundColor(.orange)
+                    }
+                    .buttonStyle(.plain)
+
+                    Text("\(cartItem.quantity)")
+                        .font(.subheadline)
                         .fontWeight(.bold)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 2)
-                        .background(Color.orange.opacity(0.15))
-                        .cornerRadius(6)
+                        .frame(width: 24)
+
+                    Button(action: onIncrease) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title3)
+                            .foregroundColor(.orange)
+                    }
+                    .buttonStyle(.plain)
+
+                    Spacer()
+
+                    Text(cartItem.subTotal, format: .currency(code: "BRL"))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                 }
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 6)
     }
 }

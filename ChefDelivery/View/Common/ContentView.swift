@@ -8,6 +8,7 @@ struct ContentView: View {
     @State private var showCart: Bool = false
     @State private var showCreateStore: Bool = false
     @State private var isDarkMode: Bool = false
+    @State private var navigationResetID: UUID = UUID()
     @StateObject private var storeViewModel = StoreViewModel()
     @EnvironmentObject var cartViewModel: CartViewModel
 
@@ -24,6 +25,7 @@ struct ContentView: View {
             }
             .preferredColorScheme(isDarkMode ? .dark : .light)
         }
+        .id(navigationResetID)
         .sheet(isPresented: $showCart) {
             CartView().environmentObject(cartViewModel)
         }
@@ -32,6 +34,9 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .orderCompleted)) { _ in
             showCart = false
+            cartViewModel.removeAll()
+            // Reset entire navigation to go back to Home
+            navigationResetID = UUID()
         }
     }
 

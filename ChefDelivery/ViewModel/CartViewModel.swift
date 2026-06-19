@@ -17,6 +17,18 @@ class CartViewModel: ObservableObject {
         }
     }
     
+    func increaseQuantity(at index: Int) {
+        items[index].quantity += 1
+    }
+
+    func decreaseQuantity(at index: Int) {
+        if items[index].quantity > 1 {
+            items[index].quantity -= 1
+        } else {
+            items.remove(at: index)
+        }
+    }
+
     func removeItem(at index: Int) {
         items.remove(at: index)
     }

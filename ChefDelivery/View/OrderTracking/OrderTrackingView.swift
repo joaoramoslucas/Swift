@@ -107,7 +107,6 @@ struct OrderTrackingView: View {
                 showRating = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     NotificationCenter.default.post(name: .orderCompleted, object: nil)
-                    dismiss()
                 }
             }
             .presentationDetents([.medium])
@@ -119,21 +118,27 @@ struct OrderTrackingView: View {
     private var orderStatusHeader: some View {
         VStack(spacing: 16) {
             ZStack {
+                if viewModel.isPulsing {
+                    Circle()
+                        .fill(Color.orange.opacity(0.12))
+                        .frame(width: 90, height: 90)
+                        .scaleEffect(viewModel.isPulsing ? 1.2 : 1.0)
+                        .opacity(viewModel.isPulsing ? 0.4 : 0.8)
+                        .animation(
+                            .easeInOut(duration: 1.5).repeatForever(autoreverses: true),
+                            value: viewModel.isPulsing
+                        )
+                }
+
                 Circle()
-                    .fill(Color.orange.opacity(0.12))
-                    .frame(width: 90, height: 90)
-                    .scaleEffect(viewModel.isPulsing ? 1.08 : 1.0)
-                    .animation(
-                        viewModel.isPulsing
-                            ? .easeInOut(duration: 1.5).repeatForever(autoreverses: true)
-                            : .default,
-                        value: viewModel.isPulsing
-                    )
+                    .fill(Color.orange.opacity(0.15))
+                    .frame(width: 80, height: 80)
 
                 Image(systemName: viewModel.currentStatus.icon)
                     .font(.system(size: 36))
                     .foregroundColor(.orange)
             }
+            .frame(width: 110, height: 110)
 
             VStack(spacing: 6) {
                 Text(viewModel.currentStatus.title)

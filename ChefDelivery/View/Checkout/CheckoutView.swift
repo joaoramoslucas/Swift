@@ -53,12 +53,6 @@ struct CheckoutView: View {
                     paymentMethod: viewModel.selectedPayment,
                     deliveryAddress: viewModel.address
                 )
-                .onDisappear {
-                    cartViewModel.removeAll()
-                    viewModel.reset()
-                    NotificationCenter.default.post(name: .orderCompleted, object: nil)
-                    dismiss()
-                }
             }
         }
     }
