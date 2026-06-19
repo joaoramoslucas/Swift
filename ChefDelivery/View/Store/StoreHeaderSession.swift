@@ -1,49 +1,63 @@
-//
-//  StoreHeaderSession.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 03/07/25.
-//
 import SwiftUI
 
 struct StoreHeaderSection: View {
     let store: AllStoresTypes
 
     var body: some View {
-        VStack(alignment: .leading) {
-            if let headerImageName = store.headerImage {
-                Image(headerImageName)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: .infinity)
-                    .clipped()
-            } else {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(maxWidth: .infinity)
-            }
-            HStack {
-                Text(store.name)
-                    .font(.title)
-                    .foregroundColor(Color.primary)
-                Spacer()
-                if let logoImageName = store.logoImage {
-                    Image(logoImageName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                        .shadow(radius: 4)
-                } else {
-                    Image(systemName: "photo.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(.gray)
+        ZStack(alignment: .bottomLeading) {
+            RemoteImage(
+                url: store.headerImage,
+                placeholder: "storefront.fill",
+                width: UIScreen.main.bounds.width,
+                height: 200,
+                cornerRadius: 0
+            )
+            .clipped()
+            
+            .overlay(
+                LinearGradient(
+                    colors: [.clear, .black.opacity(0.6)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+
+            HStack(spacing: 14) {
+                RemoteImage(
+                    url: store.logoImage,
+                    placeholder: "storefront",
+                    width: 60,
+                    height: 60,
+                    isCircle: true
+                )
+                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                .shadow(radius: 4)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(store.name)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+
+                    Text(store.location)
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.8))
+
+                    if let stars = store.stars, stars > 0 {
+                        HStack(spacing: 3) {
+                            ForEach(0..<stars, id: \.self) { _ in
+                                Image(systemName: "star.fill")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.orange)
+                            }
+                            Text("(\(stars).0)")
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                    }
                 }
             }
-            .padding(.vertical, 8)
-            .padding(.horizontal)
+            .padding(20)
         }
     }
 }

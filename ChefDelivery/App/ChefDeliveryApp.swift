@@ -14,7 +14,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct ChefDeliveryApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
+    @StateObject private var cartViewModel = CartViewModel()
     @State private var isLoggedIn: Bool = false
     @State private var isAdmin: Bool = false
 
@@ -22,11 +22,13 @@ struct ChefDeliveryApp: App {
         WindowGroup {
             if isLoggedIn {
                 if isAdmin {
-                    StorageHome()
-                        .environmentObject(CartViewModel())
+                    NavigationStack {
+                        StorageHome()
+                    }
+                    .environmentObject(cartViewModel)
                 } else {
                     ContentView(isLoggedIn: isLoggedIn, isAdmin: isAdmin)
-                        .environmentObject(CartViewModel())
+                        .environmentObject(cartViewModel)
                 }
             } else {
                 LoginView(isLoggedIn: $isLoggedIn, isAdmin: $isAdmin)

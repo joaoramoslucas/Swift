@@ -1,66 +1,99 @@
-// CartView.swift
-// ChefDelivery
-//
-// Created by Joao Lucas on 29/05/23.
-//
 import SwiftUI
 
 struct CartView: View {
     @EnvironmentObject var cartViewModel: CartViewModel
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    ForEach(cartViewModel.items.indices, id: \.self) { index in
-                        CartItemRow(cartItem: self.cartViewModel.items[index])
+        NavigationStack {
+            VStack(spacing: 0) {
+                if cartViewModel.items.isEmpty {
+                    emptyCartView
+                } else {
+                    List {
+                        ForEach(cartViewModel.items.indices, id: \.self) { index in
+                            CartItemRow(cartItem: cartViewModel.items[index])
+                        }
+                        .onDelete(perform: deleteItem)
                     }
-                    .onDelete(perform: deleteItem)
+                    .listStyle(.plain)
+
+                    // Bottom Bar
+                    VStack(spacing: 14) {
+                        Divider()
+
+                        HStack {
+                            Text("Total")
+                                .font(.headline)
+                            Spacer()
+                            Text(cartViewModel.totalPrice, format: .currency(code: "BRL"))
+                                .font(.title3)
+                                .fontWeight(.bold)
+                        }
+                        .padding(.horizontal)
+
+                        HStack(spacing: 12) {
+                            Button(action: { cartViewModel.removeAll() }) {
+                                Text("Limpar")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.red.opacity(0.1))
+                                    .foregroundColor(.red)
+                                    .cornerRadius(12)
+                            }
+
+                            NavigationLink(destination: CheckoutView().environmentObject(cartViewModel)) {
+                                Text("Finalizar Pedido")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.green)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(12)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.bottom, 10)
+                    }
                 }
-                .listStyle(PlainListStyle())
-
-                Spacer()
-
-                Text(String(format: "Total: R$%.2f", self.cartViewModel.totalPrice))
-                    .font(.title)
-                    .padding()
-
-                HStack {
-                    Button(action: {
-                        self.cartViewModel.removeAll()
-                    }) {
-                        Text("Limpar Carrinho")
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    NavigationLink(destination: CheckoutView()) {
-                        Text("Finalizar Pedido")
-                            .padding()
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                }
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .center)
             }
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "xmark")
-                        .foregroundColor(Color.primary)
+            .navigationTitle("Carrinho")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button { dismiss() } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.secondary)
+                    }
                 }
-            )
-            .padding(.bottom, 20)
+            }
         }
     }
-    private func deleteItem(at offsets: IndexSet) {
-        offsets.forEach { index in
-            self.cartViewModel.removeItem(at: index)
+
+    private var emptyCartView: some View {
+        VStack(spacing: 16) {
+            Spacer()
+
+            Image(systemName: "bag")
+                .font(.system(size: 60))
+                .foregroundColor(.gray.opacity(0.4))
+
+            Text("Seu carrinho está vazio")
+                .font(.headline)
+                .foregroundColor(.secondary)
+
+            Text("Adicione produtos de uma loja")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+
+            Spacer()
         }
+    }
+
+    private func deleteItem(at offsets: IndexSet) {
+        offsets.forEach { cartViewModel.removeItem(at: $0) }
     }
 }

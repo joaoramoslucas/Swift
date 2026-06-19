@@ -4,42 +4,41 @@ struct ProductListItemView: View {
     let product: ProductType
 
     var body: some View {
-        HStack(spacing: 15) {
-            if let productImageName = product.image {
-                Image(productImageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 130, height: 100)
-                    .cornerRadius(12)
-                    .shadow(color: .black.opacity(0.3), radius: 3, x: 2, y: 2)
-            } else {
-                Image(systemName: "fork.knife.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.gray)
-                    .cornerRadius(12)
-            }
-            
-            VStack(alignment: .leading) {
+        HStack(spacing: 14) {
+            RemoteImage(
+                url: product.image,
+                placeholder: "fork.knife",
+                width: 90,
+                height: 90,
+                cornerRadius: 12
+            )
+
+            VStack(alignment: .leading, spacing: 6) {
                 Text(product.name)
-                    .font(.headline)
-                Text(product.description)
                     .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+
+                Text(product.description)
+                    .font(.caption)
                     .foregroundColor(.secondary)
+                    .lineLimit(2)
+
+                Spacer()
+
                 if let price = product.price {
-                    Text(price.formatted(.currency(code: "BRL")))
-                        .font(.callout)
+                    Text(price, format: .currency(code: "BRL"))
+                        .font(.subheadline)
+                        .fontWeight(.bold)
                         .foregroundColor(.green)
-                } else {
-                    Text("Preço não disponível")
-                        .font(.callout)
-                        .foregroundColor(.gray)
                 }
             }
+            .padding(.vertical, 4)
+
             Spacer()
         }
-        .padding(.horizontal)
-        .padding(.vertical, 4)
+        .padding(12)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(14)
     }
 }

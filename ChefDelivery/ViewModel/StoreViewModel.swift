@@ -1,32 +1,34 @@
-//
-//  StoreViewModel.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 18/06/25.
-//
 import Foundation
-import Alamofire
 
-
-class StoreViewModel: ObservableObject {
-    
+// MARK: - Store ViewModel (Single Responsibility: presentation logic for stores)
+final class StoreViewModel: ObservableObject {
     @Published var stores: [AllStoresTypes] = []
-    @Published var products: [ProductType] = []
-    
-    func getAllStores () {
-        APIService.shared.get("/store/get_all_stores", responseType: [AllStoresTypes].self){ response in
-            switch response{
-            case .success(let data):
-                print("Requisicao feita com sucesso ✅")
-                DispatchQueue.main.async {
-                    self.stores = data
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String? = nil
+
+    private let repository: StoreRepositoryProtocol
+
+    init(repository: StoreRepositoryProtocol = StoreRepository()) {
+        self.repository = repository
+    }
+
+    func getAllStores() {
+        isLoading = true
+        errorMessage = nil
+
+        repository.fetchAllStores { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success(let data):
+                    self?.stores = data
+                case .failure(let error):
+                    self?.stores = []
+                    self?.errorMessage = "Erro ao carregar lojas"
+                    #if DEBUG
+                    print("StoreViewModel error: \(error)")
+                    #endif
                 }
-            case .failure(let err):
-                print("Erro ao buscar lojas: \(err)")
-                DispatchQueue.main.async {
-                    self.stores = []
-                }
-                
             }
         }
     }

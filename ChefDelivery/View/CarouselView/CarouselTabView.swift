@@ -1,10 +1,3 @@
-//
-//  CarouselTabView.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 18/05/23.
-//
-
 import SwiftUI
 
 struct CarouselTabView: View {
@@ -16,7 +9,7 @@ struct CarouselTabView: View {
         OrderType(id: 5, name: "mexicana", image: "mexican-banner"),
         OrderType(id: 6, name: "brasileira", image: "brazilian-banner")
     ]
-    
+
     var body: some View {
         TabView {
             ForEach(ordersMock, id: \.id) { mock in

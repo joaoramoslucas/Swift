@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03AC8F6D2A250B7400BE5D55 /* StoreItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AC8F6C2A250B7400BE5D55 /* StoreItemView.swift */; };
 		03AC8F6F2A250B8D00BE5D55 /* StoresContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AC8F6E2A250B8D00BE5D55 /* StoresContainerView.swift */; };
+		1725493FB9E65D19B0C41EBD /* CreateStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDE426DB81B62B804186DC6 /* CreateStoreViewModel.swift */; };
 		180B33692A16635500C1AFBC /* CarouselItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B33682A16635500C1AFBC /* CarouselItemView.swift */; };
 		180B336F2A166A3200C1AFBC /* CarouselTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B336E2A166A3200C1AFBC /* CarouselTabView.swift */; };
 		1828E78F2A151C6700B8A3C6 /* ChefDeliveryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1828E78E2A151C6700B8A3C6 /* ChefDeliveryApp.swift */; };
@@ -20,6 +21,8 @@
 		1828E7B32A15589100B8A3C6 /* OrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1828E7B22A15589100B8A3C6 /* OrderType.swift */; };
 		1828E7B52A15594100B8A3C6 /* DataSourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1828E7B42A15594100B8A3C6 /* DataSourceMock.swift */; };
 		1828E7B72A15639C00B8A3C6 /* OrderTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1828E7B62A15639C00B8A3C6 /* OrderTypeView.swift */; };
+		22724256A6DCFA30E6CEF3D3 /* OrderReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5340259A80AB99FBCA8C01 /* OrderReviewView.swift */; };
+		2CFF4B54B3181158FC0366D8 /* CreateStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAE4B7996228AED64FA3711 /* CreateStoreView.swift */; };
 		3175A0352C2C7ACE00AD4886 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3175A0342C2C7ACE00AD4886 /* Double+.swift */; };
 		317F16CC2C3EF8780022F100 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F16CB2C3EF8780022F100 /* ProductDetailView.swift */; };
 		317F16D22C3F11740022F100 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F16D12C3F11740022F100 /* CartView.swift */; };
@@ -27,9 +30,14 @@
 		31C14ED82C5AC4CB000ECDDE /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C14ED72C5AC4CB000ECDDE /* CartViewModel.swift */; };
 		31C14EDA2C5AC547000ECDDE /* CartItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C14ED92C5AC547000ECDDE /* CartItemRow.swift */; };
 		31C14EDC2C5AC589000ECDDE /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C14EDB2C5AC589000ECDDE /* CheckoutView.swift */; };
+		46274812B9EE64B2C7A6EDEB /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB74994BFAEDA363DF8535E /* RemoteImage.swift */; };
 		48A230C02A2BFAF300431A41 /* StoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A230BF2A2BFAF300431A41 /* StoreDetailView.swift */; };
 		48A230C22A2BFC1200431A41 /* AllStoresTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A230C12A2BFC1200431A41 /* AllStoresTypes.swift */; };
 		48A230C42A2BFC1B00431A41 /* ProductType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A230C32A2BFC1B00431A41 /* ProductType.swift */; };
+		48F0453A82467F9B190A745D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A74475F841D5DFDA1672146 /* AuthService.swift */; };
+		49F3474A87038677C1956C56 /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3694EFAA34BD6D9D0485FD2 /* StoreRepository.swift */; };
+		73294003B98A8C19D1E130EF /* OrderTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63274AE0B315FC6EF0867CA9 /* OrderTrackingView.swift */; };
+		BD2D4352B525DFCDDDC09196 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027D464B8FB6BBAA946D0499 /* Protocols.swift */; };
 		C53B69022DE4DD29007229E2 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = C53B69012DE4DD29007229E2 /* FirebaseAI */; };
 		C53B69042DE4DD29007229E2 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C53B69032DE4DD29007229E2 /* FirebaseAnalytics */; };
 		C53B69062DE4DD29007229E2 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = C53B69052DE4DD29007229E2 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -67,11 +75,17 @@
 		C5FD5F342DE77AB900A202D9 /* PaymentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD5F332DE77A9D00A202D9 /* PaymentInfoView.swift */; };
 		C5FD5F362DE77AD200A202D9 /* CreditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD5F352DE77ACC00A202D9 /* CreditCardView.swift */; };
 		C5FD5F382DE78C3C00A202D9 /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FD5F372DE78C3800A202D9 /* CheckoutViewModel.swift */; };
+		C85142CC89F86DD9654D4EF2 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6284F70A287A20248BA2A7E /* SessionManager.swift */; };
+		CBFE424398DA2C0B78D7D8EC /* OrderTrackingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0014BC29743F3F2B52A5AF9 /* OrderTrackingViewModel.swift */; };
+		CD244DC1BAF303AE70D18A35 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B4532817E6C8FA4CEC770 /* LoginViewModel.swift */; };
+		DA254CBE86AD8483011C12A6 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FC4425B8ADFB2B9AB98945 /* KeychainService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		027D464B8FB6BBAA946D0499 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = ChefDelivery/Core/Protocols/Protocols.swift; sourceTree = SOURCE_ROOT; };
 		03AC8F6C2A250B7400BE5D55 /* StoreItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemView.swift; sourceTree = "<group>"; };
 		03AC8F6E2A250B8D00BE5D55 /* StoresContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresContainerView.swift; sourceTree = "<group>"; };
+		0C9B4532817E6C8FA4CEC770 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = ChefDelivery/View/Login/LoginViewModel.swift; sourceTree = SOURCE_ROOT; };
 		180B33682A16635500C1AFBC /* CarouselItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItemView.swift; sourceTree = "<group>"; };
 		180B336E2A166A3200C1AFBC /* CarouselTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselTabView.swift; sourceTree = "<group>"; };
 		1828E78B2A151C6700B8A3C6 /* ChefDelivery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChefDelivery.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +98,8 @@
 		1828E7B22A15589100B8A3C6 /* OrderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderType.swift; sourceTree = "<group>"; };
 		1828E7B42A15594100B8A3C6 /* DataSourceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceMock.swift; sourceTree = "<group>"; };
 		1828E7B62A15639C00B8A3C6 /* OrderTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTypeView.swift; sourceTree = "<group>"; };
+		2FAE4B7996228AED64FA3711 /* CreateStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateStoreView.swift; path = ChefDelivery/View/CreateStore/CreateStoreView.swift; sourceTree = SOURCE_ROOT; };
+		2FB74994BFAEDA363DF8535E /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RemoteImage.swift; path = ChefDelivery/View/Common/RemoteImage.swift; sourceTree = SOURCE_ROOT; };
 		3175A0342C2C7ACE00AD4886 /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 		317F16CB2C3EF8780022F100 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		317F16D12C3F11740022F100 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -95,7 +111,15 @@
 		48A230BF2A2BFAF300431A41 /* StoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailView.swift; sourceTree = "<group>"; };
 		48A230C12A2BFC1200431A41 /* AllStoresTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoresTypes.swift; sourceTree = "<group>"; };
 		48A230C32A2BFC1B00431A41 /* ProductType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductType.swift; sourceTree = "<group>"; };
+		5A74475F841D5DFDA1672146 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthService.swift; path = ChefDelivery/Service/AuthService.swift; sourceTree = SOURCE_ROOT; };
+		63274AE0B315FC6EF0867CA9 /* OrderTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OrderTrackingView.swift; path = ChefDelivery/View/OrderTracking/OrderTrackingView.swift; sourceTree = SOURCE_ROOT; };
+		6A5340259A80AB99FBCA8C01 /* OrderReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OrderReviewView.swift; path = ChefDelivery/View/Checkout/OrderReviewView.swift; sourceTree = SOURCE_ROOT; };
+		88FC4425B8ADFB2B9AB98945 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeychainService.swift; path = ChefDelivery/Service/KeychainService.swift; sourceTree = SOURCE_ROOT; };
+		9CDE426DB81B62B804186DC6 /* CreateStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateStoreViewModel.swift; path = ChefDelivery/View/CreateStore/CreateStoreViewModel.swift; sourceTree = SOURCE_ROOT; };
+		A3694EFAA34BD6D9D0485FD2 /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoreRepository.swift; path = ChefDelivery/Service/StoreRepository.swift; sourceTree = SOURCE_ROOT; };
+		B6284F70A287A20248BA2A7E /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SessionManager.swift; path = ChefDelivery/Service/SessionManager.swift; sourceTree = SOURCE_ROOT; };
 		BAA8A172E88C5FB0A5B623BB /* Pods-ChefDelivery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChefDelivery.release.xcconfig"; path = "Target Support Files/Pods-ChefDelivery/Pods-ChefDelivery.release.xcconfig"; sourceTree = "<group>"; };
+		C0014BC29743F3F2B52A5AF9 /* OrderTrackingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OrderTrackingViewModel.swift; path = ChefDelivery/View/OrderTracking/OrderTrackingViewModel.swift; sourceTree = SOURCE_ROOT; };
 		C53B69352DE4E9DA007229E2 /* GoogleService-Info-google.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-google.plist"; sourceTree = "<group>"; };
 		C53B693A2DE4EB1F007229E2 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		C542DDA82E09BEAC007F9A44 /* StorageHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHome.swift; sourceTree = "<group>"; };
@@ -110,18 +134,8 @@
 		C5FD5F372DE78C3800A202D9 /* CheckoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C53B69392DE4EADF007229E2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				AuthService.swift,
-			);
-			target = 1828E78A2A151C6700B8A3C6 /* ChefDelivery */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C53B69372DE4EAD5007229E2 /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C53B69392DE4EADF007229E2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
+		C53B69372DE4EAD5007229E2 /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
 		C56C1F6C2E0322830064D290 /* ScreenAdmin */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ScreenAdmin; sourceTree = "<group>"; };
 		C56C1F802E0346170064D290 /* NetWorking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NetWorking; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -192,6 +206,18 @@
 				ED8612C0A2E4B1D73E5F8484 /* Frameworks */,
 				C5431C152DE4D592004C6CE2 /* GoogleService-Info.plist */,
 				C53B69352DE4E9DA007229E2 /* GoogleService-Info-google.plist */,
+				2FB74994BFAEDA363DF8535E /* RemoteImage.swift */,
+				2FAE4B7996228AED64FA3711 /* CreateStoreView.swift */,
+				9CDE426DB81B62B804186DC6 /* CreateStoreViewModel.swift */,
+				6A5340259A80AB99FBCA8C01 /* OrderReviewView.swift */,
+				63274AE0B315FC6EF0867CA9 /* OrderTrackingView.swift */,
+				C0014BC29743F3F2B52A5AF9 /* OrderTrackingViewModel.swift */,
+				027D464B8FB6BBAA946D0499 /* Protocols.swift */,
+				88FC4425B8ADFB2B9AB98945 /* KeychainService.swift */,
+				A3694EFAA34BD6D9D0485FD2 /* StoreRepository.swift */,
+				0C9B4532817E6C8FA4CEC770 /* LoginViewModel.swift */,
+				5A74475F841D5DFDA1672146 /* AuthService.swift */,
+				B6284F70A287A20248BA2A7E /* SessionManager.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -447,9 +473,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ChefDelivery/Pods-ChefDelivery-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ChefDelivery/Pods-ChefDelivery-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -516,6 +546,59 @@
 				C56C1F852E03466A0064D290 /* StoreViewModel.swift in Sources */,
 				180B336F2A166A3200C1AFBC /* CarouselTabView.swift in Sources */,
 				C5D478532E17074A00B6B160 /* ProductListItemView.swift in Sources */,
+				46274812B9EE64B2C7A6EDEB /* RemoteImage.swift in Sources */,
+				2CFF4B54B3181158FC0366D8 /* CreateStoreView.swift in Sources */,
+				1725493FB9E65D19B0C41EBD /* CreateStoreViewModel.swift in Sources */,
+				22724256A6DCFA30E6CEF3D3 /* OrderReviewView.swift in Sources */,
+				73294003B98A8C19D1E130EF /* OrderTrackingView.swift in Sources */,
+				CBFE424398DA2C0B78D7D8EC /* OrderTrackingViewModel.swift in Sources */,
+				BD2D4352B525DFCDDDC09196 /* Protocols.swift in Sources */,
+				DA254CBE86AD8483011C12A6 /* KeychainService.swift in Sources */,
+				49F3474A87038677C1956C56 /* StoreRepository.swift in Sources */,
+				CD244DC1BAF303AE70D18A35 /* LoginViewModel.swift in Sources */,
+				48F0453A82467F9B190A745D /* AuthService.swift in Sources */,
+				C85142CC89F86DD9654D4EF2 /* SessionManager.swift in Sources */,
+				E7D14944AA0145AB9316B15F /* CarouselTabView.swift in Sources */,
+				8D6A42819C83F6EBCA2C5108 /* OrderTypeView.swift in Sources */,
+				E1514B02996920D2A1B59F08 /* NavigationBar.swift in Sources */,
+				F1824BC0B76A2D0308708C5A /* HomeView.swift in Sources */,
+				DA934A6E8C12847254DD2DC2 /* OrderTypeGridView.swift in Sources */,
+				953346DAA92819EFEA538650 /* CarouselItemView.swift in Sources */,
+				2ABF4E78BFE4D399995DBD66 /* LoginViewModel.swift in Sources */,
+				AE0F44E3A4DA1150C413D671 /* LoginView.swift in Sources */,
+				1BE3427B93DB03C6ED09133D /* RegisterView.swift in Sources */,
+				C76640429B79D28897918927 /* AddProductsView.swift in Sources */,
+				02AE4DFE8E34099FECB57333 /* ProductsListView.swift in Sources */,
+				5E574EF6878F5FE6036DCE66 /* StorageHome.swift in Sources */,
+				4698481EAEF1C1DC06F09F18 /* ProductViewModel.swift in Sources */,
+				63804340B2275E9C81C50280 /* OrderTrackingView.swift in Sources */,
+				EB2C4569973C3E599E99C958 /* OrderTrackingViewModel.swift in Sources */,
+				398249EB9410925F1C06CB75 /* ProductListItemView.swift in Sources */,
+				6C834440A4FE6045BD6C593C /* ProductDetailView.swift in Sources */,
+				862345DE9EDCED85CFAA092F /* CheckoutView.swift in Sources */,
+				0D8940CE8B1E49EAA4F764A0 /* CheckoutViewModel.swift in Sources */,
+				58394D939DE29C38B17F2029 /* DeliveryInforView.swift in Sources */,
+				04D4400D8500833D01B01A7A /* PaymentInfoView.swift in Sources */,
+				9858444186F5C341AF987D87 /* OrderReviewView.swift in Sources */,
+				C36B43F59F0F94C93A197F51 /* CreateStoreView.swift in Sources */,
+				65E146AA9BA31771C4791FB0 /* CreateStoreViewModel.swift in Sources */,
+				69AD403299E2FBDFB0C63EBE /* CartViewModel.swift in Sources */,
+				3F9F49F9926730D690F6C7A0 /* CartItemRow.swift in Sources */,
+				2AFF4EEFAAA9DD2793A18A07 /* CartView.swift in Sources */,
+				E3B9461E85E9EC30CE2B6A68 /* StoresContainerView.swift in Sources */,
+				F07E4F5F9BE6008EF78C5589 /* StoreItemView.swift in Sources */,
+				AD9A4F03B19836FD54D79CDE /* StoreHeaderSession.swift in Sources */,
+				444E4D0E8CF05D52F22D0BD6 /* StoreViewModel.swift in Sources */,
+				4DBE479F99667A3F4CFEF0C0 /* StoreDetailView.swift in Sources */,
+				7F684E259EDEF25360615D59 /* Double+.swift in Sources */,
+				D5FC47B8A9B5518FED2C87CA /* RemoteImage.swift in Sources */,
+				51FE42FB8D12B9ECB73D3A16 /* ImagePicker.swift in Sources */,
+				AD044DCE936A78B0E870CF52 /* MenuButtonStyle.swift in Sources */,
+				ED3C4BCEBBA14638C0A71C6C /* ApiService.swift in Sources */,
+				7D02469481B9D42DE9C9BCE2 /* StoreRepository.swift in Sources */,
+				DF6C443491B558EF93FDE5D9 /* KeychainService.swift in Sources */,
+				9B124225A3E3C1AC61DAD063 /* AuthService.swift in Sources */,
+				6C6F435189D61239A8FA00A0 /* SessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,6 +743,27 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/ChefDelivery/View/Common",
+					"$(SRCROOT)/ChefDelivery/View/CreateStore",
+					"$(SRCROOT)/ChefDelivery/View/Checkout",
+					"$(SRCROOT)/ChefDelivery/View/OrderTracking",
+					"$(SRCROOT)/ChefDelivery/Core/Protocols",
+					"$(SRCROOT)/ChefDelivery/Service",
+					"$(SRCROOT)/ChefDelivery/View/Login",
+					"$(SRCROOT)/ChefDelivery/Features/Home",
+					"$(SRCROOT)/ChefDelivery/Features/Auth",
+					"$(SRCROOT)/ChefDelivery/Features/Admin",
+					"$(SRCROOT)/ChefDelivery/Features/OrderTracking",
+					"$(SRCROOT)/ChefDelivery/Features/Product",
+					"$(SRCROOT)/ChefDelivery/Features/Checkout",
+					"$(SRCROOT)/ChefDelivery/Features/CreateStore",
+					"$(SRCROOT)/ChefDelivery/Features/Cart",
+					"$(SRCROOT)/ChefDelivery/Features/Store",
+					"$(SRCROOT)/ChefDelivery/Core/Extensions",
+					"$(SRCROOT)/ChefDelivery/Core/Components",
+					"$(SRCROOT)/ChefDelivery/Core/Services",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.ChefDelivery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -693,6 +797,27 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/ChefDelivery/View/Common",
+					"$(SRCROOT)/ChefDelivery/View/CreateStore",
+					"$(SRCROOT)/ChefDelivery/View/Checkout",
+					"$(SRCROOT)/ChefDelivery/View/OrderTracking",
+					"$(SRCROOT)/ChefDelivery/Core/Protocols",
+					"$(SRCROOT)/ChefDelivery/Service",
+					"$(SRCROOT)/ChefDelivery/View/Login",
+					"$(SRCROOT)/ChefDelivery/Features/Home",
+					"$(SRCROOT)/ChefDelivery/Features/Auth",
+					"$(SRCROOT)/ChefDelivery/Features/Admin",
+					"$(SRCROOT)/ChefDelivery/Features/OrderTracking",
+					"$(SRCROOT)/ChefDelivery/Features/Product",
+					"$(SRCROOT)/ChefDelivery/Features/Checkout",
+					"$(SRCROOT)/ChefDelivery/Features/CreateStore",
+					"$(SRCROOT)/ChefDelivery/Features/Cart",
+					"$(SRCROOT)/ChefDelivery/Features/Store",
+					"$(SRCROOT)/ChefDelivery/Core/Extensions",
+					"$(SRCROOT)/ChefDelivery/Core/Components",
+					"$(SRCROOT)/ChefDelivery/Core/Services",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.ChefDelivery;

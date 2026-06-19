@@ -1,50 +1,46 @@
-//
-//  StoreHeaderSession.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 03/07/25.
-//
 import SwiftUI
 
 struct CartItemRow: View {
     let cartItem: CartItem
 
     var body: some View {
-        HStack(spacing: 10) {
-            if let productImageName = cartItem.product.image {
-                Image(productImageName)
-                    .resizable()
-                    .scaledToFit()
-                    .cornerRadius(10)
-                    .frame(width: 120, height: 120)
-            } else {
-                Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFit()
-                    .cornerRadius(10)
-                    .frame(width: 120, height: 120)
-                    .foregroundColor(.gray)
-            }
+        HStack(spacing: 12) {
+            RemoteImage(
+                url: cartItem.product.image,
+                placeholder: "fork.knife",
+                width: 70,
+                height: 70,
+                cornerRadius: 10
+            )
 
-            VStack(alignment: .leading) {
-                Text(cartItem.product.name).font(.headline)
-                Text(cartItem.product.description).foregroundColor(.gray)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(cartItem.product.name)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+
+                Text(cartItem.product.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
 
                 HStack {
                     if let price = cartItem.product.price {
-                        Text(price.formatted(.currency(code: "BRL")))
-                            .font(.subheadline)
-                    } else {
-                        Text("Preço não disponível")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                        Text(price, format: .currency(code: "BRL"))
+                            .font(.caption)
+                            .foregroundColor(.green)
                     }
-                    
                     Spacer()
-                    Text("Quant: \(cartItem.quantity)").font(.subheadline)
+                    Text("x\(cartItem.quantity)")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 2)
+                        .background(Color.orange.opacity(0.15))
+                        .cornerRadius(6)
                 }
             }
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 4)
     }
 }

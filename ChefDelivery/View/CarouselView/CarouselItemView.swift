@@ -1,18 +1,15 @@
-//
-//  StoreHeaderSession.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 03/07/25.
-//
 import SwiftUI
 
 struct CarouselItemView: View {
     let order: OrderType
-    
+
     var body: some View {
         Image(order.image)
             .resizable()
-            .scaledToFit()
-            .cornerRadius(12)
+            .scaledToFill()
+            .frame(height: 160)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(.horizontal, 20)
+            .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 3)
     }
 }

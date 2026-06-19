@@ -2,16 +2,22 @@ import SwiftUI
 
 struct OrderTypeView: View {
     let orderType: OrderType
-    
+
     var body: some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 8) {
             Image(orderType.image)
                 .resizable()
-                .scaledToFit()
-                .fixedSize(horizontal: false, vertical: true)
+                .scaledToFill()
+                .frame(width: 64, height: 64)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .shadow(color: .black.opacity(0.08), radius: 4, x: 0, y: 2)
+
             Text(orderType.name)
-                .font(.system(size: 10))
+                .font(.caption2)
+                .fontWeight(.medium)
+                .foregroundColor(.primary)
+                .lineLimit(1)
         }
-        .frame(width: 70, height: 100)
+        .frame(width: 76)
     }
 }

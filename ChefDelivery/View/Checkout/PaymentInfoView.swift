@@ -1,207 +1,434 @@
 import SwiftUI
 
 struct PaymentInfoView: View {
-    @ObservedObject var checkoutViewModel: CheckoutViewModel
-    @Binding var path: NavigationPath
-    @FocusState private var focusedField: Field?
-    @State private var saveCard: Bool = false
-    @State private var isFlipped = false
-    @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var cartViewModel: CartViewModel
- 
-    
-    enum Field {
-        case name, card, expiration, cvv
+    @ObservedObject var viewModel: CheckoutViewModel
+    @FocusState private var focusedField: PaymentField?
+    @State private var isFlipped: Bool = false
+
+    enum PaymentField {
+        case holder, number, expiration, cvv
     }
 
     var body: some View {
-        VStack(spacing: 40) {
-            Spacer()
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 24) {
+                // Header
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Como deseja pagar?")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    Text("Escolha sua forma de pagamento preferida")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
 
-            ZStack {
-                cardFront
-                    .opacity(isFlipped ? 0.0 : 1.0)
-                    .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x:0, y:1, z:0))
-                cardBack
-                    .opacity(isFlipped ? 1.0 : 0.0)
-                    .rotation3DEffect(.degrees(isFlipped ? 0 : -180), axis: (x:0, y:1, z:0))
-            }
-            .frame(width: 320, height: 200)
-            .animation(.easeInOut(duration: 0.6), value: isFlipped)
-            .onChange(of: focusedField) { newField in
-                withAnimation {
-                    isFlipped = (newField == .cvv)
+                // Payment Method Selector
+                VStack(spacing: 10) {
+                    ForEach(PaymentMethod.allCases) { method in
+                        PaymentMethodRow(
+                            method: method,
+                            isSelected: viewModel.selectedPayment == method
+                        ) {
+                            withAnimation(.spring(response: 0.3)) {
+                                viewModel.selectedPayment = method
+                            }
+                        }
+                    }
+                }
+
+                // Payment Details Based on Selection
+                switch viewModel.selectedPayment {
+                case .creditCard, .debitCard:
+                    cardPaymentSection
+                case .pix:
+                    pixPaymentSection
+                case .cash:
+                    cashPaymentSection
                 }
             }
-            formFields
-                .padding(.horizontal)
-            Button(action: {
-                saveCard.toggle()
-                 checkoutViewModel.saveCard()
-            }) {
-                HStack {
-                    Image(systemName: saveCard ? "checkmark.circle.fill" : "creditcard")
-                    Text(saveCard ? "Cartão Salvo" : "Salvar Cartão")
-                        .bold()
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(saveCard ? Color.green : Color.blue)
-                .foregroundColor(.white)
-                .clipShape(Capsule())
-            }
-            .padding(.horizontal)
-
-            Spacer()
-
-            Button("Finalizar Pedido") {
-                checkoutViewModel.confirmOrder()
-            }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.green)
-            .foregroundColor(.white)
-            .clipShape(Capsule())
-            .padding(.horizontal)
+            .padding(20)
         }
-        .alert("Pedido Confirmado", isPresented: $checkoutViewModel.isOrderConfirmed) {
-            Button("OK", role: .cancel) {
-                cartViewModel.removeAll()
-                path = NavigationPath()
+        .onChange(of: focusedField) { newField in
+            withAnimation(.easeInOut(duration: 0.5)) {
+                isFlipped = (newField == .cvv)
             }
         }
     }
 
-    private var cardFront: some View {
-        ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(LinearGradient(
-                    colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.9)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ))
-                .shadow(radius: 8)
+    // MARK: - Card Payment
+    private var cardPaymentSection: some View {
+        VStack(spacing: 20) {
+            // Card Preview
+            ZStack {
+                cardFrontView
+                    .opacity(isFlipped ? 0 : 1)
+                    .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x: 0, y: 1, z: 0))
 
-            VStack(alignment: .leading, spacing: 16) {
-                Text("Nome")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                Text(checkoutViewModel.name.isEmpty ? "" : checkoutViewModel.name)
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .lineLimit(1)
+                cardBackView
+                    .opacity(isFlipped ? 1 : 0)
+                    .rotation3DEffect(.degrees(isFlipped ? 0 : -180), axis: (x: 0, y: 1, z: 0))
+            }
+            .frame(height: 190)
+            .animation(.easeInOut(duration: 0.5), value: isFlipped)
+
+            // Card Form
+            VStack(spacing: 14) {
+                CheckoutFormField(
+                    icon: "person.text.rectangle",
+                    title: "Nome no cartão",
+                    placeholder: "NOME COMO ESTÁ NO CARTÃO",
+                    text: Binding(
+                        get: { viewModel.cardHolder },
+                        set: { viewModel.updateCardHolder($0) }
+                    )
+                )
+                .focused($focusedField, equals: .holder)
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Número do cartão")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+
+                    HStack(spacing: 12) {
+                        Image(systemName: "creditcard")
+                            .foregroundColor(.orange)
+                            .frame(width: 20)
+                        TextField("0000 0000 0000 0000", text: Binding(
+                            get: { viewModel.cardNumber },
+                            set: { viewModel.updateCardNumber($0) }
+                        ))
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .number)
+
+                        if viewModel.detectedCardBrand != .unknown {
+                            Text(viewModel.detectedCardBrand.name)
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                .foregroundColor(.orange)
+                                .transition(.opacity)
+                        }
+                    }
+                    .padding(14)
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(viewModel.cardValidationError != nil ? Color.red.opacity(0.5) : Color.clear, lineWidth: 1)
+                    )
+
+                    if let error = viewModel.cardValidationError {
+                        HStack(spacing: 4) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.caption2)
+                            Text(error)
+                                .font(.caption2)
+                        }
+                        .foregroundColor(.red)
+                        .transition(.opacity)
+                    }
+                }
+
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Validade")
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundColor(.secondary)
+
+                        HStack(spacing: 12) {
+                            Image(systemName: "calendar")
+                                .foregroundColor(.orange)
+                                .frame(width: 20)
+                            TextField("MM/AA", text: Binding(
+                                get: { viewModel.expirationDate },
+                                set: { viewModel.updateExpirationDate($0) }
+                            ))
+                            .keyboardType(.numberPad)
+                            .focused($focusedField, equals: .expiration)
+                        }
+                        .padding(14)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(12)
+                    }
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("CVV")
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundColor(.secondary)
+
+                        HStack(spacing: 12) {
+                            Image(systemName: "lock.fill")
+                                .foregroundColor(.orange)
+                                .frame(width: 20)
+                            SecureField("•••", text: Binding(
+                                get: { viewModel.cvv },
+                                set: { viewModel.updateCVV($0) }
+                            ))
+                            .keyboardType(.numberPad)
+                            .focused($focusedField, equals: .cvv)
+                        }
+                        .padding(14)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(12)
+                    }
+                }
+            }
+
+            // Save Card Toggle
+            Button {
+                viewModel.saveCard()
+            } label: {
+                HStack {
+                    Image(systemName: viewModel.isCardSaved ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(viewModel.isCardSaved ? .green : .gray)
+                    Text(viewModel.isCardSaved ? "Cartão salvo com segurança" : "Salvar cartão para próximas compras")
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Image(systemName: "lock.shield.fill")
+                        .font(.caption)
+                        .foregroundColor(.green)
+                }
+                .padding(14)
+                .background(Color(.secondarySystemBackground))
+                .cornerRadius(12)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    // MARK: - Card Front
+    private var cardFrontView: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(
+                    LinearGradient(
+                        colors: [Color(red: 0.1, green: 0.1, blue: 0.3), Color(red: 0.3, green: 0.1, blue: 0.5)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    Text("ChefDelivery")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white.opacity(0.7))
+                    Spacer()
+                    Image(systemName: viewModel.selectedPayment == .debitCard ? "wave.3.right" : "creditcard.fill")
+                        .foregroundColor(.white.opacity(0.7))
+                }
 
                 Spacer()
 
-                Text("Número do Cartão")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                Text(formattedCardNumber)
-                    .font(.title2)
+                Text(viewModel.formattedCardNumber)
+                    .font(.system(size: 20, weight: .medium, design: .monospaced))
                     .foregroundColor(.white)
-                    .monospacedDigit()
-                    .lineLimit(1)
+                    .tracking(2)
+
+                Spacer()
 
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text("Validade")
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("TITULAR")
+                            .font(.system(size: 9))
+                            .foregroundColor(.white.opacity(0.6))
+                        Text(viewModel.cardHolder.isEmpty ? "SEU NOME" : viewModel.cardHolder)
                             .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                        Text(checkoutViewModel.expirationDate.isEmpty ? "MM/AA" : checkoutViewModel.expirationDate)
-                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text("VALIDADE")
+                            .font(.system(size: 9))
+                            .foregroundColor(.white.opacity(0.6))
+                        Text(viewModel.expirationDate.isEmpty ? "MM/AA" : viewModel.expirationDate)
+                            .font(.caption)
+                            .fontWeight(.semibold)
                             .foregroundColor(.white)
                     }
-                    Spacer()
                 }
             }
             .padding(20)
         }
     }
-    
-    private var cardBack: some View {
+
+    // MARK: - Card Back
+    private var cardBackView: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .fill(LinearGradient(
-                    colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.9)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ))
-                .shadow(radius: 8)
+                .fill(
+                    LinearGradient(
+                        colors: [Color(red: 0.3, green: 0.1, blue: 0.5), Color(red: 0.1, green: 0.1, blue: 0.3)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
 
             VStack(spacing: 20) {
                 Rectangle()
-                    .fill(Color.black.opacity(0.85))
-                    .frame(height: 40)
-                    .cornerRadius(5)
-                    .padding(.horizontal, 20)
-
-                Spacer()
+                    .fill(Color.black.opacity(0.8))
+                    .frame(height: 44)
+                    .padding(.top, 20)
 
                 HStack {
                     Spacer()
-                    VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 4) {
                         Text("CVV")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                        Text(checkoutViewModel.cvv.isEmpty ? "***" : checkoutViewModel.cvv)
-                            .font(.title3)
+                            .font(.system(size: 10))
+                            .foregroundColor(.white.opacity(0.6))
+                        Text(viewModel.cvv.isEmpty ? "•••" : viewModel.cvv)
+                            .font(.system(size: 16, weight: .bold, design: .monospaced))
                             .foregroundColor(.white)
-                            .padding(6)
-                            .background(Color.black.opacity(0.6))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(Color.white.opacity(0.15))
                             .cornerRadius(6)
                     }
                     .padding(.trailing, 30)
                 }
+
                 Spacer()
             }
-            .padding(.vertical, 20)
-        }
-    }
-    
-    private var formFields: some View {
-        VStack(spacing: 16) {
-            TextField("Nome no cartão", text: Binding(
-                get: { checkoutViewModel.name },
-                set: { checkoutViewModel.updateName($0) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            .focused($focusedField, equals: .name)
-
-            TextField("Número do cartão", text: Binding(
-                get: { checkoutViewModel.cardNumber },
-                set: { checkoutViewModel.updateCardNumber($0) }
-            ))
-            .keyboardType(.numberPad)
-            .textFieldStyle(.roundedBorder)
-            .focused($focusedField, equals: .card)
-
-            TextField("Validade (MM/AA)", text: Binding(
-                get: { checkoutViewModel.expirationDate },
-                set: { checkoutViewModel.updateExpirationDate($0) }
-            ))
-            .keyboardType(.numbersAndPunctuation)
-            .textFieldStyle(.roundedBorder)
-            .focused($focusedField, equals: .expiration)
-
-            TextField("CVV", text: Binding(
-                get: { checkoutViewModel.cvv },
-                set: { checkoutViewModel.updateCVV($0) }
-            ))
-            .keyboardType(.numberPad)
-            .textFieldStyle(.roundedBorder)
-            .focused($focusedField, equals: .cvv)
         }
     }
 
-    private var formattedCardNumber: String {
-        let trimmed = checkoutViewModel.cardNumber.filter { $0.isNumber }
-        var result = ""
-        for (index, digit) in trimmed.enumerated() {
-            if index != 0 && index % 4 == 0 {
-                result += " "
+    // MARK: - PIX Section
+    private var pixPaymentSection: some View {
+        VStack(spacing: 20) {
+            // PIX Info Card
+            VStack(spacing: 16) {
+                Image(systemName: "qrcode")
+                    .font(.system(size: 60))
+                    .foregroundColor(.green)
+
+                Text("Pagamento via PIX")
+                    .font(.headline)
+
+                Text("Ao confirmar o pedido, você receberá um QR Code e a chave PIX para realizar o pagamento.")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+
+                HStack(spacing: 8) {
+                    Image(systemName: "bolt.fill")
+                        .foregroundColor(.orange)
+                    Text("Aprovação instantânea")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
-            result.append(digit)
+            .padding(24)
+            .frame(maxWidth: .infinity)
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(16)
+
+            // Benefits
+            VStack(alignment: .leading, spacing: 12) {
+                pixBenefit(icon: "percent", text: "5% de desconto no pagamento via PIX")
+                pixBenefit(icon: "clock.fill", text: "Confirmação em segundos")
+                pixBenefit(icon: "shield.checkered", text: "Pagamento seguro e protegido")
+            }
         }
-        return result.isEmpty ? "•••• •••• •••• ••••" : result
+    }
+
+    private func pixBenefit(icon: String, text: String) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.subheadline)
+                .foregroundColor(.green)
+                .frame(width: 24)
+            Text(text)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+        }
+        .padding(.horizontal, 4)
+    }
+
+    // MARK: - Cash Section
+    private var cashPaymentSection: some View {
+        VStack(spacing: 20) {
+            VStack(spacing: 16) {
+                Image(systemName: "banknote")
+                    .font(.system(size: 50))
+                    .foregroundColor(.green)
+
+                Text("Pagamento em Dinheiro")
+                    .font(.headline)
+
+                Text("Pague ao entregador no momento da entrega.")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(24)
+            .frame(maxWidth: .infinity)
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(16)
+
+            // Change field
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Precisa de troco para quanto?")
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+
+                HStack(spacing: 12) {
+                    Image(systemName: "brazilianrealsign.circle")
+                        .foregroundColor(.orange)
+                        .frame(width: 20)
+                    TextField("Ex: 50,00 (deixe vazio se não precisa)", text: $viewModel.cashChange)
+                        .keyboardType(.decimalPad)
+                }
+                .padding(14)
+                .background(Color(.secondarySystemBackground))
+                .cornerRadius(12)
+            }
+        }
+    }
+}
+
+// MARK: - Payment Method Row
+struct PaymentMethodRow: View {
+    let method: PaymentMethod
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 14) {
+                Image(systemName: method.icon)
+                    .font(.title3)
+                    .foregroundColor(isSelected ? .orange : .gray)
+                    .frame(width: 28)
+
+                Text(method.rawValue)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary)
+
+                Spacer()
+
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(isSelected ? .orange : .gray.opacity(0.4))
+            }
+            .padding(14)
+            .background(isSelected ? Color.orange.opacity(0.08) : Color(.secondarySystemBackground))
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isSelected ? Color.orange.opacity(0.5) : Color.clear, lineWidth: 1.5)
+            )
+        }
+        .buttonStyle(.plain)
     }
 }

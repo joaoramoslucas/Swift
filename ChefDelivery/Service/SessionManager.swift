@@ -1,13 +1,37 @@
-//
-//  SessionManager.swift
-//  ChefDelivery
-//
-//  Created by Joao Lucas on 28/07/25.
-//
-
 import SwiftUI
+import FirebaseAuth
 
-class SessionManager {
+// MARK: - Session Manager (Single Responsibility: manages auth state only)
+final class SessionManager: ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var isAdmin: Bool = false
+    @Published var currentUserEmail: String = ""
+
+    static let shared = SessionManager()
+    private var authListener: AuthStateDidChangeListenerHandle?
+
+    private init() {
+        listenToAuthChanges()
+    }
+
+    private func listenToAuthChanges() {
+        authListener = Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            DispatchQueue.main.async {
+                self?.isLoggedIn = user != nil
+                self?.currentUserEmail = user?.email ?? ""
+            }
+        }
+    }
+
+    func loginAsAdmin() {
+        isAdmin = true
+        isLoggedIn = true
+    }
+
+    func logout() {
+        try? Auth.auth().signOut()
+        isAdmin = false
+        isLoggedIn = false
+        currentUserEmail = ""
+    }
 }
